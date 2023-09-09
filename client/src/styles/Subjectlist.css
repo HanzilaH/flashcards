@@ -1,0 +1,59 @@
+* {
+	box-sizing: border-box;
+}
+
+
+
+/*  */
+
+#subject-list-section{
+    /* max-height: 100vh; */
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+#subject-list{
+    margin-top: 3%;
+    min-width: 50vw;
+    max-width: 85vw;
+
+}
+
+#subject-list div {
+    margin-bottom: 10px; /* Adjust the value to control the spacing between list items */
+  }
+/* 
+dl {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+	gap: 1rem;
+}
+
+dl > div {
+	background: antiquewhite;
+	padding: 1rem;
+} */
+
+/* Target specific list items within the #subject-list */
+#subject-list div:nth-child(4n - 2) {
+    background: lavenderblush;
+  }
+  
+  #subject-list div:nth-child(4n - 1) {
+    background: azure;
+  }
+  
+  #subject-list div:nth-child(4n) {
+    background: lavender;
+  }
+  
+.list-group-item {
+	font-weight: 600;
+	font-size: 1.3rem;
+}

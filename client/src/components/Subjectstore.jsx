@@ -5,7 +5,7 @@ import DataContext from "../DataContext";
 const Subjectstore = (props) => {
   const { onStartClick } = props;
 
-  const { data, pushData } = useContext(DataContext);
+  const { data, pushData, setCurrentSubject } = useContext(DataContext);
   const maxHeight = 250;
 
   const [formData, setFormData] = useState({
@@ -103,6 +103,9 @@ const Subjectstore = (props) => {
             {/* Start */}
             <button onClick={onStartClick} className="me-3">
               Start
+            </button>
+            <button onClick={() => setCurrentSubject(null)} className="me-3">
+              HomePage
             </button>
             <button onClick={nextQuestion}>Next question</button>
           </div>

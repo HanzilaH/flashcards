@@ -5,33 +5,49 @@ import { useContext } from "react";
 
 const Subjectflash = () => {
   const [flashCard, setFlashCard] = useState(null);
-  const { data } = useContext(DataContext);
-  const [question, setQuestion] = useState(true);
+  const { data, currentSubject, setCurrentSubject } = useContext(DataContext);
+
+  const [questions, setQuestions] = useState([]);
+  const [showQuestion, setShowQuestion] = useState(true);
 
   useEffect(() => {
-    if (data.length === 0) {
-      // Handle the case when the data array is empty
+    // Find the subject object with the matching name
+    const subjectObject = data.find(
+      (element) => element.subject === currentSubject
+    );
+
+    // Extract the questions array of the current subject
+    const currentSubjectQuestions = subjectObject
+      ? subjectObject.questions
+      : [];
+
+    setQuestions(currentSubjectQuestions);
+  }, []);
+
+  useEffect(() => {
+    if (questions.length === 0) {
+      // Handle the case when the questions array is empty
       return;
     }
 
-    const randomIndex = Math.floor(Math.random() * data.length);
-    const selectedCard = data[randomIndex];
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    const selectedCard = questions[randomIndex];
 
     setFlashCard(selectedCard); // Update the state with the selected card
-  }, [data]);
+  }, [questions]);
 
   const flipCard = () => {
-    setQuestion(!question);
+    setShowQuestion(!showQuestion);
   };
 
   const nextQuestion = () => {
-    setQuestion(true);
-    if (data.length === 0) {
+    setShowQuestion(true);
+    if (questions.length === 0) {
       return;
     }
 
-    const randomIndex = Math.floor(Math.random() * data.length);
-    const selectedCard = data[randomIndex];
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    const selectedCard = questions[randomIndex];
 
     setFlashCard(selectedCard);
   };
@@ -44,13 +60,16 @@ const Subjectflash = () => {
         <div
           className={`card w-75 h-75 mb-3 d-flex justify-content-center align-items-center `}
         >
-          {flashCard && (question ? flashCard.question : flashCard.answer)}
+          {flashCard && (showQuestion ? flashCard.question : flashCard.answer)}
         </div>
 
         <div className="row w-75">
           <div className="d-flex justify-content-end ">
             <button className="me-3" onClick={flipCard}>
               Flip
+            </button>
+            <button onClick={() => setCurrentSubject(null)} className="me-3">
+              HomePage
             </button>
             <button onClick={nextQuestion}>Next question</button>
           </div>
