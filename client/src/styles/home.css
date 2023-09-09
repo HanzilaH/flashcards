@@ -1,0 +1,29 @@
+#home-section{
+    max-height: 100vh;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.card.rotate {
+    animation: rotate 1s linear;
+
+}
+  
+  @keyframes rotate {
+    0% {
+      transform: rotateY(0deg);
+
+    }
+    100% {
+      transform: rotateY(180deg);
+
+    }
+  }
+  
