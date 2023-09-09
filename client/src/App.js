@@ -2,16 +2,22 @@ import './App.css';
 import Home from './pages/Home';
 import { DataContextProvider } from './DataContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import Subjectstore from './components/Subjectstore';
 import Flash from './pages/Flash';
 
 function App() {
+
   return (
 
     <div className="App">
 
       <DataContextProvider>
-      <Router>
+        <Home></Home>
+        {/* <Subjectstore >
+
+        </Subjectstore> */}
+
+      {/* <Router>
 
 
           <Routes>
@@ -20,7 +26,7 @@ function App() {
             
           </Routes>
 
-      </Router>
+      </Router> */}
         
       </DataContextProvider>
       
