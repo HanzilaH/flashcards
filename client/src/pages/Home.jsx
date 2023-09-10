@@ -8,6 +8,7 @@ import DataContext from "../DataContext";
 import Subjectstore from "../components/Subjectstore";
 import Subjectflash from "../components/Subjectflash";
 import Subjectlist from "../components/Subjectlist";
+import Subjectview from "../components/Subjectview";
 
 const Home = () => {
   const { currentSubject, setCurrentSubject } = useContext(DataContext);

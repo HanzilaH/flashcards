@@ -1,0 +1,25 @@
+#question-store-card{
+    border-radius: 30px;
+  background: #e0e0e0;
+  box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff;
+}
+
+
+
+
+.question-store-textarea{
+
+    width: 100%;
+    
+
+    border: 1px solid #414141;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  background-color: transparent;
+  font-family: inherit;
+
+
+  
+  /* scrollbar-width: 5px; */
+}

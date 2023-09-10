@@ -1,39 +1,45 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
+import "../styles/Flashcard.css";
 
-const Flashcard = () => {
-  const [isAnswer, setIsAnswer] = useState(false);
+const Flashcard = ({ flipped, flashcardJson }) => {
+  // const {flashcardJson} = props
+  const [isFlipped, setIsFlipped] = useState(flipped);
+
   const toggleCard = () => {
-    setIsAnswer(!isAnswer);
+    setIsFlipped(!isFlipped);
   };
-
-  const questionContent = (
-    <>
-      <h1 className="mb-3">Question</h1>
-      <div>
-        <input type="text" />
-        <button onClick={() => toggleCard()}>Answer</button>
-      </div>
-    </>
-  );
-
-  const answerContent = (
-    <>
-      <h1 className="mb-3">Answer</h1>
-      <div>
-        <input type="text" />
-        <button onClick={() => toggleCard()}>Question</button>
-      </div>
-    </>
-  );
 
   return (
     <>
       <div
-        className={`card  w-75 h-75 mb-3 d-flex justify-content-center align-items-center `}
+        className={`flip-card ${isFlipped ? "flipped" : ""}`}
+        onClick={toggleCard}
       >
-        {isAnswer ? answerContent : questionContent}
+        <div className="flip-card-inner">
+          <div className="flip-card-front">
+            <div className="content-container">
+              {flashcardJson.question}
+              lkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj ;laskdfj
+              ;laskfjlkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj ;laskdfj
+              ;laskfj ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj
+              ;laskdfj ;laskfj ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk
+              j;laskdjf;lsakdfj ;laskdfj ;laskfj ;alskdflkas; lkj a;sldkf j;lk
+              j;lk j;lk j;laskdjf;lsakdfj ;laskdfj ;laskfj ;alskdflkas; lkj
+              a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj ;laskdfj ;laskfj
+              ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj ;laskdfj
+              ;laskfj ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj
+              ;laskdfj ;laskfj ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk
+              j;laskdjf;lsakdfj ;laskdfj ;laskfj ;alskdf ;alskdf
+            </div>
+          </div>
+          <div className="flip-card-back">
+            {flashcardJson.answer}
+            laskd;fklsaj ;dflksaj d;flksaj df;lksadjf lsakdf ;asldkf
+            jas;ldkfjas;ldkfj sa;ldfkja sl;dkfjg
+          </div>
+        </div>
       </div>
+      <button onClick={() => toggleCard()}>button</button>
     </>
   );
 };

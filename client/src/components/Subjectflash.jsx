@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import DataContext from "../DataContext";
 import { useContext } from "react";
+import Flashcard from "./Flashcard";
 
 const Subjectflash = () => {
   const [flashCard, setFlashCard] = useState(null);
@@ -60,6 +61,10 @@ const Subjectflash = () => {
         <div
           className={`card w-75 h-75 mb-3 d-flex justify-content-center align-items-center `}
         >
+          <Flashcard
+            flipped={showQuestion}
+            flashcardJson={{ question: "kjdfa", answer: "adskjfhas" }}
+          ></Flashcard>
           {flashCard && (showQuestion ? flashCard.question : flashCard.answer)}
         </div>
 
