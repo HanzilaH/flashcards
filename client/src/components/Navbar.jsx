@@ -5,7 +5,7 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-md container-sm">
-          <div className="navbar-brand">BookTok</div>
+          <div className="navbar-brand">Flashcard.io</div>
 
           <button
             className="navbar-toggler"
@@ -23,17 +23,13 @@ const Navbar = () => {
             <ul className="navbar-nav ms-auto mb-2">
               <li className="nav-item">
                 <div className="nav-link active mx-3" aria-current="page">
-                  Books
+                  Home
                 </div>
               </li>
+
               <li className="nav-item">
                 <div className="nav-link active mx-3" aria-current="page">
-                  Scroll
-                </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link active mx-3" aria-current="page">
-                  Choose
+                  Planner
                 </div>
               </li>
               <li className="nav-item">

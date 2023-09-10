@@ -8,6 +8,7 @@ import Subjectview from './components/Subjectview';
 import QuestionStore from './components/QuestionStore';
 import Subjectflash from './components/Subjectflash';
 import { useState } from 'react';
+import Subjectlist from './components/Subjectlist';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
         }
 
         <Subjectflash></Subjectflash>
+        <Subjectlist></Subjectlist>
         
 
         {/* <Subjectstore></Subjectstore> */}
