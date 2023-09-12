@@ -9,6 +9,8 @@ const Subjectlist = ({ onClickSubjectName }) => {
   const [modalInputValue, setModalInputValue] = useState("");
   const [subjectArray, setSubjectArray] = useState([]);
 
+  const [errorValue, setErrorValue] = useState(null);
+
   useEffect(() => {
     const transformedData = data.map((element) => (
       //   <li
@@ -18,19 +20,24 @@ const Subjectlist = ({ onClickSubjectName }) => {
       //   >
       //     {element.subject}
       //   </li>
-      <div class="d-flex">
+      <div class="d-flex subject-list-item ">
         <div class=" flex-grow-1">
           <div
             key={element.id}
             onClick={() => onClickSubjectName(element.subject)}
-            className="list-group-item bg-transparent border-0"
+            className="subject bg-transparent m-0 p-2"
           >
             {element.subject}
           </div>
         </div>
 
-        <div class="p-2 bg-transparent">
-          <FontAwesomeIcon icon={faTrash} />
+        <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
+          <div
+            // onClick={() => handleRemoveElement(element)}
+            className="subject-trash-bin"
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </div>
         </div>
       </div>
     ));
@@ -38,10 +45,28 @@ const Subjectlist = ({ onClickSubjectName }) => {
     setSubjectArray(transformedData);
   }, [data, onClickSubjectName]);
 
+  useEffect(() => {
+    setErrorValue(null);
+  }, [modalInputValue]);
+
   const handleSaveChangesClick = () => {
     console.log("Save changes clicked");
     console.log("Modal input value:", modalInputValue);
+    if (modalInputValue === "") {
+      setErrorValue("Incorrect Subject Name!");
+      setTimeout(() => {
+        setErrorValue(null);
+      }, 2000);
+      return;
+    }
+
     addSubjectEntry(modalInputValue);
+    const closeModalElement = document.querySelector(
+      "[data-bs-dismiss='modal']"
+    );
+    if (closeModalElement) {
+      closeModalElement.click();
+    }
     setModalInputValue("");
   };
 
@@ -85,12 +110,16 @@ const Subjectlist = ({ onClickSubjectName }) => {
                 ></button>
               </div>
               <div className="modal-body">
-                <input
+                <textarea
+                  className="subject-list-input"
                   name="modal-name"
                   id=""
                   value={modalInputValue}
                   onChange={(e) => setModalInputValue(e.target.value)}
                 />
+                <div className="text-center subject-list-error">
+                  {errorValue ? errorValue : null}
+                </div>
               </div>
               <div className="modal-footer">
                 <button
@@ -105,7 +134,7 @@ const Subjectlist = ({ onClickSubjectName }) => {
                   className="btn btn-primary"
                   onClick={handleSaveChangesClick}
                 >
-                  Save changes
+                  Save
                 </button>
               </div>
             </div>
