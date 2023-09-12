@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Subjectview = (props) => {
-  const { onQuestionClick } = props;
+  const { onQuestionClick, onStartClick } = props;
   const { data, removeQuestion, currentSubject, findQuestionArray } =
     useContext(DataContext);
 
@@ -68,7 +68,10 @@ const Subjectview = (props) => {
                 <polyline points="8 1 12 5 8 9"></polyline>
               </svg>
             </button>
-            <button className="subject-view-button">
+            <button
+              onClick={() => onStartClick()}
+              className="subject-view-button"
+            >
               <span>Start</span>
               <svg viewBox="0 0 13 10" height="10px" width="15px">
                 <path d="M1,5 L11,5"></path>

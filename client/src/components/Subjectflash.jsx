@@ -5,7 +5,8 @@ import { useContext } from "react";
 import "../styles/Subjectflash.css";
 import Flashcard from "./Flashcard";
 
-const Subjectflash = () => {
+const Subjectflash = (props) => {
+  const { onHomeClick } = props;
   const [flashCard, setFlashCard] = useState(null);
   const { data, currentSubject, setCurrentSubject } = useContext(DataContext);
 
@@ -75,7 +76,7 @@ const Subjectflash = () => {
         <div className="row w-75 ">
           <div className="d-flex justify-content-center ">
             <button
-              onClick={() => setCurrentSubject(null)}
+              onClick={() => onHomeClick()}
               className="subject-flash-button me-3"
             >
               Home

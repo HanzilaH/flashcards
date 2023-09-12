@@ -9,48 +9,19 @@ import QuestionStore from './components/QuestionStore';
 import Subjectflash from './components/Subjectflash';
 import { useState } from 'react';
 import Subjectlist from './components/Subjectlist';
+import Subject from './pages/Subject';
 
 function App() {
 
-  const [subjectView, setSubjectView] = useState(true)
-  const [questionJSON, setQuestionJSON] = useState({question:"", answer:""})
 
-
-  const handleQuestionClick=(e)=>{
-    setSubjectView(!subjectView);
-    console.log(e);
-    setQuestionJSON(e)
-  }
+  
 
   return (
 
     <div className="App">
 
       <DataContextProvider>
-        {
-          subjectView? <Subjectview onQuestionClick={handleQuestionClick} />: <QuestionStore questionJSON = {questionJSON}  onDoneClick={handleQuestionClick}></QuestionStore>
-        }
-
-        <Subjectflash></Subjectflash>
-        <Subjectlist></Subjectlist>
-        
-
-        {/* <Subjectstore></Subjectstore> */}
-
-        {/* <Subjectstore >
-
-        </Subjectstore> */}
-
-      {/* <Router>
-
-
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/flash" element={<Flash />} />
-            
-          </Routes>
-
-      </Router> */}
+        <Subject></Subject>
         
       </DataContextProvider>
       
