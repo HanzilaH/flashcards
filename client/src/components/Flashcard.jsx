@@ -1,45 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Flashcard.css";
 
 const Flashcard = ({ flipped, flashcardJson }) => {
   // const {flashcardJson} = props
-  const [isFlipped, setIsFlipped] = useState(flipped);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [yFlip, setYFlip] = useState(false);
+  const [localFlashcardJson, setLocalFlashCardJson] = useState({
+    question: "qs",
+    answer: "ans",
+  });
 
   const toggleCard = () => {
     setIsFlipped(!isFlipped);
   };
 
+  useEffect(() => {
+    toggleCard();
+  }, [flipped]);
+
+  useEffect(() => {
+    setLocalFlashCardJson(flashcardJson);
+
+    setYFlip(true);
+    setIsFlipped(false);
+    // setYFlip(false);
+    setTimeout(() => {
+      setYFlip(false);
+    }, 550);
+  }, [flashcardJson]);
   return (
     <>
       <div
-        className={`flip-card ${isFlipped ? "flipped" : ""}`}
+        className={`flip-card ${isFlipped ? "flipped" : ""} ${
+          yFlip ? " y-axis-flip" : ""
+        }`}
         onClick={toggleCard}
       >
         <div className="flip-card-inner">
           <div className="flip-card-front">
             <div className="content-container">
-              {flashcardJson.question}
-              lkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj ;laskdfj
-              ;laskfjlkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj ;laskdfj
-              ;laskfj ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj
-              ;laskdfj ;laskfj ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk
-              j;laskdjf;lsakdfj ;laskdfj ;laskfj ;alskdflkas; lkj a;sldkf j;lk
-              j;lk j;lk j;laskdjf;lsakdfj ;laskdfj ;laskfj ;alskdflkas; lkj
-              a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj ;laskdfj ;laskfj
-              ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj ;laskdfj
-              ;laskfj ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk j;laskdjf;lsakdfj
-              ;laskdfj ;laskfj ;alskdflkas; lkj a;sldkf j;lk j;lk j;lk
-              j;laskdjf;lsakdfj ;laskdfj ;laskfj ;alskdf ;alskdf
+              {localFlashcardJson ? localFlashcardJson.question : null}
             </div>
           </div>
           <div className="flip-card-back">
-            {flashcardJson.answer}
-            laskd;fklsaj ;dflksaj d;flksaj df;lksadjf lsakdf ;asldkf
-            jas;ldkfjas;ldkfj sa;ldfkja sl;dkfjg
+            {localFlashcardJson ? localFlashcardJson.answer : null}
           </div>
         </div>
       </div>
-      <button onClick={() => toggleCard()}>button</button>
     </>
   );
 };

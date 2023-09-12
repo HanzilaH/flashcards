@@ -40,14 +40,16 @@
   /* Customize front and back content styles */
   .flip-card-front {
     /* Front content styles */
-    background-color: #3498db; /* Front background color */
+    background-image: linear-gradient(160deg, #0075e9 10%, #bb80d0 100%);
+
+
     color: #fff; /* Front text color */
   }
 
   
   
   .content-container {
-    max-height: 100%; /* Limit the height of the content container */
+    max-height: 100%; 
     overflow-y: auto; 
   }
 
@@ -57,4 +59,15 @@
     color: #fff; 
     transform: rotateY(180deg);
   }
-  
+
+
+/* Simple CSS class for Y-axis flip animation */
+.y-axis-flip {
+
+  transform-style: preserve-3d;
+  transition: transform 0.5s; /* Animation duration and easing */
+  transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg); /* Rotation to flip the card */
+
+}
+
+

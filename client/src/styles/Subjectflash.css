@@ -1,0 +1,37 @@
+.subject-flash-button{
+    
+    border: 3px solid #abb9ee;
+    color: #7680a4;
+    padding: 3px 10px;
+
+  border-radius: 45px;
+  transition: all 0.3s;
+  cursor: pointer;
+  background: white;
+  font-size: 1.1em;
+
+  font-family: 'Montserrat', sans-serif;
+}
+
+.subject-flash-button:hover {
+  background: #2f5af387;
+  color: white;
+
+}
+@media (max-width: 768px) {
+    /* to stop the hover effect for phones */
+    .subject-flash-button:hover {
+        background: white;
+        color: #7680a4; 
+      }
+  }
+
+
+.subject-flash-label{
+    color: rgb(17, 17, 17);
+    font-weight: 400;
+
+    font-size: 1.4em;
+    margin-bottom: 1.5em;
+
+}

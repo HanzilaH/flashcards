@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import DataContext from "../DataContext";
 import { useContext } from "react";
+import "../styles/Subjectflash.css";
 import Flashcard from "./Flashcard";
 
 const Subjectflash = () => {
@@ -59,24 +60,33 @@ const Subjectflash = () => {
 
       <div id="home-section">
         <div
-          className={`card w-75 h-75 mb-3 d-flex justify-content-center align-items-center `}
+          className={` w-75 h-75 mb-3 d-flex justify-content-center align-items-center flex-column `}
         >
+          <div className="subject-flash-label">
+            {flashCard && (showQuestion ? "Question" : "Answer")}
+          </div>
+
           <Flashcard
             flipped={showQuestion}
-            flashcardJson={{ question: "kjdfa", answer: "adskjfhas" }}
+            flashcardJson={flashCard}
           ></Flashcard>
-          {flashCard && (showQuestion ? flashCard.question : flashCard.answer)}
         </div>
 
-        <div className="row w-75">
-          <div className="d-flex justify-content-end ">
-            <button className="me-3" onClick={flipCard}>
+        <div className="row w-75 ">
+          <div className="d-flex justify-content-center ">
+            <button
+              onClick={() => setCurrentSubject(null)}
+              className="subject-flash-button me-3"
+            >
+              Home
+            </button>
+
+            <button className="subject-flash-button me-3" onClick={flipCard}>
               Flip
             </button>
-            <button onClick={() => setCurrentSubject(null)} className="me-3">
-              HomePage
+            <button className="subject-flash-button" onClick={nextQuestion}>
+              Next
             </button>
-            <button onClick={nextQuestion}>Next question</button>
           </div>
         </div>
       </div>
