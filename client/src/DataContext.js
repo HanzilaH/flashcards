@@ -13,34 +13,34 @@ export const DataContextProvider = ({ children }) => {
             {
                 subject: "sub1",
                 questions: [
-            {question: "1", answer: "1a"}, 
-        {question: "2", answer: "2a"}, 
-        {question: "3", answer: "3a"}, 
-        {question: "4", answer: "4a"}]
+            {id:"1", question: "1", answer: "1a"}, 
+        {id:"2",question: "2", answer: "2a"}, 
+        {id:"3",question: "3", answer: "3a"}, 
+        {id:"4", question: "4", answer: "4a"}]
             },
             {
                 subject: "sub2",
                 questions: [
-            {question: "1", answer: "1a"}, 
-        {question: "2", answer: "2a"}, 
-        {question: "3", answer: "3a"}, 
-        {question: "4", answer: "4a"}]
+                  {id:"1", question: "1", answer: "1a"}, 
+              {id:"2",question: "2", answer: "2a"}, 
+              {id:"3",question: "3", answer: "3a"}, 
+              {id:"4", question: "4", answer: "4a"}]
             },
             {
                 subject: "sub3",
                 questions: [
-            {question: "1", answer: "1a"}, 
-        {question: "2", answer: "2a"}, 
-        {question: "3", answer: "3a"}, 
-        {question: "4", answer: "4a"}]
+                  {id:"1", question: "1", answer: "1a"}, 
+              {id:"2",question: "2", answer: "2a"}, 
+              {id:"3",question: "3", answer: "3a"}, 
+              {id:"4", question: "4", answer: "4a"}]
             },
             {
                 subject: "sub4",
                 questions: [
-            {question: "1", answer: "1a"}, 
-        {question: "2", answer: "2a"}, 
-        {question: "3", answer: "3a"}, 
-        {question: "4", answer: "4a"}]
+                  {id:"1", question: "1", answer: "1a"}, 
+              {id:"2",question: "2", answer: "2a"}, 
+              {id:"3",question: "3", answer: "3a"}, 
+              {id:"4", question: "4", answer: "4a"}]
             }
         ]
         
@@ -117,9 +117,9 @@ export const DataContextProvider = ({ children }) => {
                 const updatedQuestions = entry.questions.filter(
                   (question) => question.question !== questionToRemove
                 );
-                // return { ...entry, questions: updatedQuestions };
+                return { ...entry, questions: updatedQuestions };
               }
-              // return entry;
+              return entry;
             })
           );
         };

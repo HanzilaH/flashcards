@@ -89,7 +89,12 @@ const QuestionStore = (props) => {
 
       <div className="row w-75">
         <div className="d-flex justify-content-end mt-3">
-          <button onClick={() => toggleCard()}>Answer</button>
+          <button
+            className="question-store-button"
+            onClick={() => toggleCard()}
+          >
+            Answer
+          </button>
         </div>
       </div>
     </>
@@ -112,7 +117,12 @@ const QuestionStore = (props) => {
 
       <div className="row w-75">
         <div className="d-flex justify-content-end mt-3">
-          <button onClick={() => toggleCard()}>Question</button>
+          <button
+            className="question-store-button"
+            onClick={() => toggleCard()}
+          >
+            Question
+          </button>
         </div>
       </div>
     </>
@@ -139,11 +149,14 @@ const QuestionStore = (props) => {
                 doneFunction();
                 onDoneClick(formData);
               }}
-              className="me-3"
+              className="question-store-button me-3"
             >
               Done
             </button>
-            <button onClick={nextQuestion}>New question</button>
+
+            <button className="question-store-button " onClick={nextQuestion}>
+              New question
+            </button>
           </div>
         </div>
       </div>

@@ -13,17 +13,16 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.subject-flash-button:hover {
-  background: #2f5af387;
-  color: white;
 
-}
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     /* to stop the hover effect for phones */
-    .subject-flash-button:hover {
-        background: white;
-        color: #7680a4; 
+
+      .subject-flash-button:hover {
+        background: #2f5af387;
+        color: white;
+      
       }
+      
   }
 
 

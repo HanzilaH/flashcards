@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import "../styles/Subjectview.css";
 import DataContext from "../DataContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -14,43 +14,88 @@ const Subjectview = (props) => {
 
   const [questionArray, setQuestionArray] = useState([]);
 
+  // let removeElementRef = useRef(null);
+  //
+  // useEffect(() => {
+  //   // Ensure that removeElementRef.current is not null before accessing it
+  //   if (removeElementRef.current) {
+  //     // Add the class to the DOM element
+  //     removeElementRef.current.classList.add("remove-element-animation");
+  //   }
+  // }, [removeElementRef]);
+
+  // const removeElementAnimation = (id) => {
+  //   console.log(questionArray);
+  //   questionArray.filter((element) => {
+  //     console.log(element.props.id);
+  //     if (element.props.id === id) {
+  //       element.ref = removeElementRef;
+  //       console.log(element);
+  //     }
+  //   });
+  // };
+
+  const [removeElementRef, setRemoveElementRef] = useState({});
+  // const [questionArray, setQuestionArray] = useState([]);
+  // Create a function to handle element removal
+  const handleRemoveElement = (element) => {
+    const updatedRemoveElementRef = { ...removeElementRef };
+    updatedRemoveElementRef[element.id] = true;
+
+    // Set the updated object
+    setRemoveElementRef(updatedRemoveElementRef);
+    console.log(removeElementRef);
+
+    // Remove the question after the animation duration
+    setTimeout(() => {
+      removeQuestion(currentSubject, element.question);
+
+      // Reset the removing state
+      updatedRemoveElementRef[element.id] = false;
+      setRemoveElementRef(updatedRemoveElementRef);
+    }, 10);
+  };
+
   useEffect(() => {
-    const transformedData = findQuestionArray(currentSubject).map((element) => (
-      //   <li
-      //     key={element.id}
-      //     onClick={() => onClickSubjectName(element.subject)}
-      //     className="list-group-item"
-      //   >
-      //     {element.subject}
-      //   </li>
-      <div className="d-flex m-2">
-        <div className=" flex-grow-1">
-          <div
-            onClick={() => onQuestionClick(element)}
-            key={element.id}
-            className="list-group-item question bg-transparent border-0"
-          >
-            {element.question}
+    const transformedData = findQuestionArray(currentSubject).map((element) => {
+      const elementID = element.id;
+
+      // Create a new object with the updated property
+      const updatedRemoveElementRef = { ...removeElementRef };
+      updatedRemoveElementRef[elementID] = false;
+
+      return (
+        <div
+          key={element.id}
+          className={`d-flex m-2 ${
+            removeElementRef[element.id] ? "remove-element-animation" : ""
+          }`}
+        >
+          <div className="flex-grow-1">
+            <div
+              onClick={() => onQuestionClick(element)}
+              className="list-group-item question bg-transparent border-0"
+            >
+              {element.question}
+            </div>
+          </div>
+
+          <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
+            <div onClick={() => handleRemoveElement(element)}>
+              <FontAwesomeIcon icon={faTrash} />
+            </div>
           </div>
         </div>
-
-        <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
-          <FontAwesomeIcon icon={faTrash} />
-        </div>
-      </div>
-    ));
+      );
+    });
 
     setQuestionArray(transformedData);
-  }, []);
+  }, [data]);
 
   return (
     <>
       <Navbar />
       <div className="subject-view-section">
-        <div className="row">
-          <h1>{currentSubject}</h1>
-        </div>
-
         <div className="d-flex align-items-center">
           <div className="p-2 w-75">
             <h1>{currentSubject}</h1>

@@ -11,6 +11,7 @@
 .question-store-textarea{
 
     width: 100%;
+    padding: 10px 15px;
     
 
     border: 1px solid #414141;
@@ -19,7 +20,25 @@
   background-color: transparent;
   font-family: inherit;
 
+}
 
+
+.question-store-button{
+  font-size: 1em;
   
-  /* scrollbar-width: 5px; */
+  color: rgb(27, 27, 27);
+  padding: 2px 7px;
+  border: 1px solid;
+  border-radius: 15px;
+
+  transition: all .2s;
+
+}
+
+/* Apply the hover effect for screens with a minimum width of 768px */
+@media (min-width: 768px) {
+  .question-store-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(27, 27, 27, .5);
+  }
 }
