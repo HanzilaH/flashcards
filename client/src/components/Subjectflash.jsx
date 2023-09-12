@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
 import DataContext from "../DataContext";
 import { useContext } from "react";
 import "../styles/Subjectflash.css";
@@ -57,8 +56,6 @@ const Subjectflash = (props) => {
 
   return (
     <>
-      <Navbar />
-
       <div id="home-section">
         <div
           className={` w-75 h-75 mb-3 d-flex justify-content-center align-items-center flex-column `}

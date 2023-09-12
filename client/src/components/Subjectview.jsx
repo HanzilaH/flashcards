@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "./Navbar";
 import "../styles/Subjectview.css";
 import DataContext from "../DataContext";
 import { useContext, useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -13,47 +13,27 @@ const Subjectview = (props) => {
     useContext(DataContext);
 
   const [questionArray, setQuestionArray] = useState([]);
-
-  // let removeElementRef = useRef(null);
-  //
-  // useEffect(() => {
-  //   // Ensure that removeElementRef.current is not null before accessing it
-  //   if (removeElementRef.current) {
-  //     // Add the class to the DOM element
-  //     removeElementRef.current.classList.add("remove-element-animation");
-  //   }
-  // }, [removeElementRef]);
-
-  // const removeElementAnimation = (id) => {
-  //   console.log(questionArray);
-  //   questionArray.filter((element) => {
-  //     console.log(element.props.id);
-  //     if (element.props.id === id) {
-  //       element.ref = removeElementRef;
-  //       console.log(element);
-  //     }
-  //   });
-  // };
+  const navigate = useNavigate();
 
   const [removeElementRef, setRemoveElementRef] = useState({});
   // const [questionArray, setQuestionArray] = useState([]);
   // Create a function to handle element removal
   const handleRemoveElement = (element) => {
-    const updatedRemoveElementRef = { ...removeElementRef };
-    updatedRemoveElementRef[element.id] = true;
+    // const updatedRemoveElementRef = { ...removeElementRef };
+    // updatedRemoveElementRef[element.id] = true;
 
-    // Set the updated object
-    setRemoveElementRef(updatedRemoveElementRef);
-    console.log(removeElementRef);
+    // // Set the updated object
+    // setRemoveElementRef(updatedRemoveElementRef);
+    // console.log(removeElementRef);
 
-    // Remove the question after the animation duration
-    setTimeout(() => {
-      removeQuestion(currentSubject, element.question);
+    // // Remove the question after the animation duration
+    // setTimeout(() => {
+    removeQuestion(currentSubject, element.question);
 
-      // Reset the removing state
-      updatedRemoveElementRef[element.id] = false;
-      setRemoveElementRef(updatedRemoveElementRef);
-    }, 10);
+    //   // Reset the removing state
+    //   updatedRemoveElementRef[element.id] = false;
+    //   setRemoveElementRef(updatedRemoveElementRef);
+    // }, 10);
   };
 
   useEffect(() => {
@@ -61,16 +41,11 @@ const Subjectview = (props) => {
       const elementID = element.id;
 
       // Create a new object with the updated property
-      const updatedRemoveElementRef = { ...removeElementRef };
-      updatedRemoveElementRef[elementID] = false;
+      // const updatedRemoveElementRef = { ...removeElementRef };
+      // updatedRemoveElementRef[elementID] = false;
 
       return (
-        <div
-          key={element.id}
-          className={`d-flex m-2 question-list-item ${
-            removeElementRef[element.id] ? "remove-element-animation" : ""
-          }`}
-        >
+        <div key={element.id} className={`d-flex m-2 question-list-item `}>
           <div className="flex-grow-1">
             <div
               onClick={() => onQuestionClick(element)}
@@ -97,7 +72,6 @@ const Subjectview = (props) => {
 
   return (
     <>
-      <Navbar />
       <div className="subject-view-section">
         <div className="d-flex align-items-center">
           <div className="p-2 w-75">
@@ -136,6 +110,24 @@ const Subjectview = (props) => {
               {questionArray}
             </ul>
           </div>
+        </div>
+
+        <div className="w-100 d-flex justify-content-end">
+          <button
+            onClick={() => navigate("/", { replace: true })}
+            className="subject-view-button"
+          >
+            <span>Back</span>
+            <svg
+              style={{ transform: "rotate(180deg)" }}
+              viewBox="0 0 13 10"
+              height="10px"
+              width="15px"
+            >
+              <path d="M1,5 L11,5"></path>
+              <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+          </button>
         </div>
       </div>
     </>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Navbar from "./Navbar";
 import DataContext from "../DataContext";
 import "../styles/Subjectlist.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -48,7 +47,6 @@ const Subjectlist = ({ onClickSubjectName }) => {
 
   return (
     <>
-      <Navbar />
       <div id="subject-list-section" className="mt-3">
         <div>
           <h1>Subjects</h1>

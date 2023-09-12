@@ -28,19 +28,7 @@
 #subject-list div {
     margin-bottom: 10px; /* Adjust the value to control the spacing between list items */
   }
-/* 
-dl {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
-	gap: 1rem;
-}
 
-dl > div {
-	background: antiquewhite;
-	padding: 1rem;
-} */
-
-/* Target specific list items within the #subject-list */
 #subject-list div:nth-child(4n - 2) {
     background: lavenderblush;
   }

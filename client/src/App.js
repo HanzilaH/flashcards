@@ -10,6 +10,7 @@ import Subjectflash from './components/Subjectflash';
 import { useState } from 'react';
 import Subjectlist from './components/Subjectlist';
 import Subject from './pages/Subject';
+import Navbar from './components/Navbar';
 
 function App() {
 
@@ -21,7 +22,14 @@ function App() {
     <div className="App">
 
       <DataContextProvider>
-        <Subject></Subject>
+
+      <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/subject" element={<Subject />} />
+          </Routes>
+      </Router>
         
       </DataContextProvider>
       

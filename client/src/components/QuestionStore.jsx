@@ -1,5 +1,4 @@
 import React, { useState, useContext, useRef } from "react";
-import Navbar from "./Navbar";
 import DataContext from "../DataContext";
 import "../styles/QuestionStore.css";
 
@@ -130,8 +129,6 @@ const QuestionStore = (props) => {
 
   return (
     <>
-      <Navbar></Navbar>
-
       <div id="home-section">
         <div
           id="question-store-card"

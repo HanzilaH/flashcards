@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import Navbar from "../components/Navbar";
 import "../styles/home.css";
 // import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import DataContext from "../DataContext";
 import Subjectstore from "../components/Subjectstore";
@@ -12,35 +12,22 @@ import Subjectview from "../components/Subjectview";
 
 const Home = () => {
   const { currentSubject, setCurrentSubject } = useContext(DataContext);
-  const [subjectFlash, setSubjectFlash] = useState(false);
 
-  const handleStartClick = () => {
-    setSubjectFlash(true);
-  };
+  const navigate = useNavigate(); // Get the navigate function
 
   const handleSubjectNameClick = (el) => {
     console.log(el);
     setCurrentSubject(el);
-    setSubjectFlash(false);
+    navigate("/subject"); // Navigate to the "/subject" route
   };
 
-  const mainRenderingFunction = () => {
-    if (currentSubject === null) {
-      return (
-        <Subjectlist
-          onClickSubjectName={(e) => handleSubjectNameClick(e)}
-        ></Subjectlist>
-      );
-    } else {
-      return !subjectFlash ? (
-        <Subjectstore onStartClick={handleStartClick} />
-      ) : (
-        <Subjectflash />
-      );
-    }
-  };
-
-  return <>{mainRenderingFunction()}</>;
+  return (
+    <>
+      <Subjectlist
+        onClickSubjectName={(e) => handleSubjectNameClick(e)}
+      ></Subjectlist>
+    </>
+  );
 };
 
 export default Home;
