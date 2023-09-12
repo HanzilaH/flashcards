@@ -67,21 +67,24 @@ const Subjectview = (props) => {
       return (
         <div
           key={element.id}
-          className={`d-flex m-2 ${
+          className={`d-flex m-2 question-list-item ${
             removeElementRef[element.id] ? "remove-element-animation" : ""
           }`}
         >
           <div className="flex-grow-1">
             <div
               onClick={() => onQuestionClick(element)}
-              className="list-group-item question bg-transparent border-0"
+              className="list-group-item question  bg-transparent border-0"
             >
               {element.question}
             </div>
           </div>
 
           <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
-            <div onClick={() => handleRemoveElement(element)}>
+            <div
+              onClick={() => handleRemoveElement(element)}
+              className="trash-bin"
+            >
               <FontAwesomeIcon icon={faTrash} />
             </div>
           </div>
@@ -127,7 +130,8 @@ const Subjectview = (props) => {
         </div>
 
         <div className="d-flex justify-content-center">
-          <div className="card w-75">
+          <div className="card w-75 question-list-card">
+            <div id="question-label">Questions:</div>
             <ul id="question-list" className="m-2 list-group ">
               {questionArray}
             </ul>
