@@ -13,6 +13,7 @@ import Subject from './pages/Subject';
 import Navbar from './components/Navbar';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
+import Authenticate from './pages/Authenticate';
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
       <Router>
           <Navbar />
           <Routes>
-          <Route path="/" element={<SignIn />} />
+          <Route path="/" element={<Authenticate />} />
 
             {/* <Route path="/" element={<Home />} />
             <Route path="/subject" element={<Subject />} /> */}
@@ -36,7 +37,7 @@ function App() {
       </Router>
         
       </DataContextProvider>
-            <SignUp></SignUp>
+            
       
       
     </div>

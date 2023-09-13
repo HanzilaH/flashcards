@@ -1,11 +1,35 @@
 import React from "react";
 import "../../styles/SignUp.css";
+import { useState } from "react";
+import { auth } from "../../firebase/firebaseConfig.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const SignUp = () => {
+
+const SignUp = ({onSignInButtonClick}) => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [userName, setUserName] = useState('')
+
+
+    const signUpUser = (e)=>
+        {
+          e.preventDefault();
+          createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential)=>{
+          console.log(userCredential);
+        }).catch((err)=>console.log(err))
+      }
+  
+
+
+
+
+
+
   return (
     <>
       <div className="w-100 d-flex justify-content-center">
-        <form>
+        <form  onSubmit={signUpUser}>
           <div className="form ">
             <div className="card_header">
               <svg
@@ -33,6 +57,7 @@ const SignUp = () => {
                 type="text"
                 placeholder="Username"
                 id="sign-up-username"
+                onChange={(e)=>setUserName(e.target.value)}
               />
             </div>
 
@@ -46,7 +71,7 @@ const SignUp = () => {
                 type="text"
                 placeholder="Username"
                 id="sign-up-email"
-              />
+                onChange={(e)=>setEmail(e.target.value)}              />
             </div>
             <div className="flex-column d-flex mb-5">
               <label className="sign-up-label" htmlFor="password">
@@ -58,18 +83,19 @@ const SignUp = () => {
                 type="password"
                 placeholder="Password"
                 id="sign-up-password"
+                onChange={(e)=>setPassword(e.target.value)}
               />
             </div>
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-auto">
-                  <button className="sign-up-button">Sign up</button>
-                  <button className="sign-up-button">Login</button>
+                  <button type="submit" className="sign-up-button">Sign up</button>
+                  <button onClick={onSignInButtonClick} className="sign-up-button">Login</button>
                 </div>
               </div>
             </div>
 
-            <div className="row w-100 separator">
+            <div className="row mt-4 w-100 separator">
               <div className="col">
                 <hr />
               </div>

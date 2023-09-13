@@ -6,11 +6,11 @@ import { auth } from "../../firebase/firebaseConfig.js";
 import { useEffect, useState } from "react";
 import "../../styles/SignIn.css";
 
-const SignIn = () => {
+const SignIn = ({onSignUpButtonClick}) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const signIn=(e)=>{
+  const signInUser=(e)=>{
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential)=>{
@@ -43,7 +43,7 @@ const SignIn = () => {
     </div> */}
 
       <div className="w-100 d-flex justify-content-center">
-        <form onSubmit={signIn} className="form ">
+        <form onSubmit={signInUser} className="form ">
           <div className="card_header">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ const SignIn = () => {
             <h1 className="form_heading">Sign in</h1>
           </div>
 
-          <div className="row mb-3">
+          <div className="row w-75 mb-3">
             <label className="sign-in-label" htmlFor="email">
               Email
             </label>
@@ -73,7 +73,7 @@ const SignIn = () => {
               onChange={(e)=>setEmail(e.target.value)}
             />
           </div>
-          <div className="row mb-5">
+          <div className="row w-75 mb-5">
             <label className="sign-in-label" htmlFor="password">
               Password
             </label>
@@ -92,7 +92,7 @@ const SignIn = () => {
               <div className="row  justify-content-center">
                 <div className="col-auto">
                   <button type="submit" className="sign-in-button">Login</button>
-                  <button className="sign-in-button">Sign up</button>
+                  <button onClick={onSignUpButtonClick} className="sign-in-button">Sign up</button>
 
                 </div>
               </div>
