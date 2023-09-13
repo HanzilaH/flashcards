@@ -11,6 +11,8 @@ import { useState } from 'react';
 import Subjectlist from './components/Subjectlist';
 import Subject from './pages/Subject';
 import Navbar from './components/Navbar';
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
 
 function App() {
 
@@ -26,12 +28,15 @@ function App() {
       <Router>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/subject" element={<Subject />} />
+          <Route path="/" element={<SignIn />} />
+
+            {/* <Route path="/" element={<Home />} />
+            <Route path="/subject" element={<Subject />} /> */}
           </Routes>
       </Router>
         
       </DataContextProvider>
+            <SignUp></SignUp>
       
       
     </div>
