@@ -1,6 +1,6 @@
 import './App.css';
 import Home from './pages/Home';
-import { DataContextProvider } from './DataContext';
+import { DataContextProvider } from './context/DataContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Subjectstore from './components/Subjectstore';
 import Flash from './pages/Flash';
@@ -60,7 +60,7 @@ function App() {
           <h3>Subjects:</h3>
           <ul>
             {user.subjects.map((subject) => {
-              return (<>{subject.name}</>)
+              return (<>{subject.questions}</>)
             
             })}
           </ul>

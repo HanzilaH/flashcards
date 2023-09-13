@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Navbar from "./Navbar";
-import DataContext from "../DataContext";
+import DataContext from "../context/DataContext";
 
 const Subjectstore = (props) => {
   const { onStartClick } = props;

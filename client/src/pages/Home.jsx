@@ -4,7 +4,7 @@ import "../styles/home.css";
 // import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import DataContext from "../DataContext";
+import DataContext from "../context/DataContext";
 import Subjectstore from "../components/Subjectstore";
 import Subjectflash from "../components/Subjectflash";
 import Subjectlist from "../components/Subjectlist";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DataContext from "../DataContext";
+import DataContext from "../context/DataContext";
 import Subjectview from "../components/Subjectview";
 import Subjectflash from "../components/Subjectflash";
 import QuestionStore from "../components/QuestionStore";

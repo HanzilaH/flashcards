@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Subjectview.css";
-import DataContext from "../DataContext";
+import DataContext from "../context/DataContext";
 import { useContext, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 

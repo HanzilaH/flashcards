@@ -1,5 +1,5 @@
 import React from "react";
-import DataContext from "../DataContext";
+import DataContext from "../context/DataContext";
 
 const Flash = () => {
   return <div>Flash</div>;

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
-import DataContext from "../DataContext";
+import DataContext from "../context/DataContext";
 import "../styles/QuestionStore.css";
 
 const QuestionStore = (props) => {

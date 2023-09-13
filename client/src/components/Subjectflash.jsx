@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DataContext from "../DataContext";
+import DataContext from "../context/DataContext";
 import { useContext } from "react";
 import "../styles/Subjectflash.css";
 import Flashcard from "./Flashcard";

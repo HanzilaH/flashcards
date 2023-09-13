@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import DataContext from "../DataContext";
+import DataContext from "../context/DataContext";
 import "../styles/Subjectlist.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
