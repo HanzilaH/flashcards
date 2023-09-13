@@ -1,11 +1,58 @@
 // MyContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthContext';
+import { db } from '../firebase/firebaseConfig';
+import { collection, query, getDocs, getDoc, where, doc } from 'firebase/firestore';
+
+
 
 // Create a context with a default value (null in this case)
 const DataContext = createContext(null);
 
 // Create a custom provider component
 export const DataContextProvider = ({ children }) => {
+
+  const {currentUser} = useAuth()
+
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (currentUser) {
+        console.log('here');
+        const userDocRef = doc(db, 'users', currentUser.uid); // 'users' is the name of your collection
+    const userDoc = await getDoc(userDocRef);
+
+
+        console.log(userDoc);
+        if (userDoc.exists()) {
+          console.log(userDoc);
+
+          
+          const userData = userDoc.data();
+
+          // Fetch additional data if needed
+          const subjectsCollectionRef = collection(userDoc.ref, 'subjects');
+          const subjectsDocs = await getDocs(subjectsCollectionRef);
+          const subjectsData = subjectsDocs.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+
+          userData.subjects = subjectsData;
+          setUserData(userData);
+        }
+      }else{
+        setUserData(null)
+      }
+    };
+
+    fetchUserData();
+  }, [currentUser]);
+
+
+
+
     const [data, setData] = useState(
 
         [
@@ -139,7 +186,7 @@ export const DataContextProvider = ({ children }) => {
     };
   
     return (
-      <DataContext.Provider value={{ data, pushData, currentSubject, setCurrentSubject, addSubjectEntry, removeEntryBySubject, removeQuestion, findQuestionArray, updateQuestionJson }}>
+      <DataContext.Provider value={{ userData, data, pushData, currentSubject, setCurrentSubject, addSubjectEntry, removeEntryBySubject, removeQuestion, findQuestionArray, updateQuestionJson }}>
         {children}
       </DataContext.Provider>
     );

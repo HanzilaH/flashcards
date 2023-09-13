@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react'
 import SignIn from '../components/auth/SignIn'
 import SignUp from '../components/auth/SignUp'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '../firebase/firebaseConfig'
 import { db } from '../firebase/firebaseConfig'
 import { collection, doc } from 'firebase/firestore'
+import DataContext from '../context/DataContext'
 
 const Authenticate = () => {
 
   const [signInPage, setSignInPage] = useState(true)
   const [authUser, setAuthUser] = useState(null)
   const [questionList, setQuestionList] = useState(null)
+
+  const {userData} = useContext(DataContext)
 
   useEffect(()=>{
     const listen =   onAuthStateChanged(auth, (user)=>{
@@ -53,6 +56,9 @@ const Authenticate = () => {
   return (
     <>
     <div>
+      
+      {userData? <div>data is there</div>: <div>shithead</div>}
+
       {authUser? `Signed In ${authUser.email}`: 'Signed out'}
       {signInPage? <SignIn onSignUpButtonClick = {togglePage} />: <SignUp onSignInButtonClick = {togglePage} />}
         <button onClick={userSignOut}>

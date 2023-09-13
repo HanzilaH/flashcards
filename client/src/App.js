@@ -7,7 +7,7 @@ import Flash from './pages/Flash';
 import Subjectview from './components/Subjectview';
 import QuestionStore from './components/QuestionStore';
 import Subjectflash from './components/Subjectflash';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Subjectlist from './components/Subjectlist';
 import Subject from './pages/Subject';
 import Navbar from './components/Navbar';
@@ -18,41 +18,45 @@ import { db } from './firebase/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import { faAsterisk } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from './context/AuthContext';
-
+import DataContext from './context/DataContext';
 
 
 function App() {
 
   const {currentUser, logout} = useAuth()
+  const {userData} = useContext(DataContext) 
   const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, 'users');
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const userDocs = await getDocs(usersCollectionRef);
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const userDocs = await getDocs(usersCollectionRef);
 
-      const usersData = [];
-      for (const userDoc of userDocs.docs) {
-        const userData = userDoc.data();
-        const subjectsCollectionRef = collection(userDoc.ref, 'subjects');
-        const subjectsDocs = await getDocs(subjectsCollectionRef);
-        const subjectsData = subjectsDocs.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id
-        }));
-        userData.subjects = subjectsData;
-        usersData.push({ ...userData, id: userDoc.id });
-      }
+  //     const usersData = [];
+  //     for (const userDoc of userDocs.docs) {
+  //       const userData = userDoc.data();
+  //       const subjectsCollectionRef = collection(userDoc.ref, 'subjects');
+  //       const subjectsDocs = await getDocs(subjectsCollectionRef);
+  //       const subjectsData = subjectsDocs.docs.map((doc) => ({
+  //         ...doc.data(),
+  //         id: doc.id
+  //       }));
+  //       userData.subjects = subjectsData;
+  //       usersData.push({ ...userData, id: userDoc.id });
+  //     }
 
-      setUsers(usersData);
-    }
+  //     setUsers(usersData);
+  //   }
 
-    getUsers();
-  }, []);
+  //   getUsers();
+  // }, []);
 
   return (
 
     <div className="App">
+          {
+            userData? console.log(userData): null
+          }
 
       {currentUser? users.map((user) => (
         <div key={user.id}>
@@ -71,19 +75,21 @@ function App() {
 
       {console.log(users)}
 
-      <DataContextProvider>
 
       <Router>
           <Navbar />
           <Routes>
           <Route path="/" element={<Authenticate />} />
 
+
+
+
+
             {/* <Route path="/" element={<Home />} />
             <Route path="/subject" element={<Subject />} /> */}
           </Routes>
       </Router>
         
-      </DataContextProvider>
             
       
       
