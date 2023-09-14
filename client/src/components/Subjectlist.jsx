@@ -3,13 +3,42 @@ import DataContext from "../context/DataContext";
 import "../styles/Subjectlist.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { addSubjectToUser } from "../context/DbFunctions";
+import { useAuth } from "../context/AuthContext";
+import { serverTimestamp } from "firebase/firestore";
+
+
+
+
+
 
 const Subjectlist = ({ onClickSubjectName }) => {
+
+
+
+  const {currentUser} = useAuth()
+
+
   const { data, addSubjectEntry } = useContext(DataContext);
   const [modalInputValue, setModalInputValue] = useState("");
   const [subjectArray, setSubjectArray] = useState([]);
 
   const [errorValue, setErrorValue] = useState(null);
+
+  const generateUniqueTimeBasedId = ()=> {
+    // Get the current Unix timestamp (in milliseconds)
+    const unixTimestamp = Date.now();
+  
+    // Generate a random number or unique identifier
+    // You can use a library like `uuid` for generating unique identifiers
+    // For simplicity, we'll generate a random number here
+    const uniqueIdentifier = Math.floor(Math.random() * 1000000); // Change as needed
+  
+    // Concatenate the timestamp and unique identifier to create the unique ID
+    const uniqueId = `${unixTimestamp}-${uniqueIdentifier}`;
+  
+    return uniqueId;
+  }
 
   useEffect(() => {
     const transformedData = data.map((element) => (
@@ -61,12 +90,23 @@ const Subjectlist = ({ onClickSubjectName }) => {
     }
 
     addSubjectEntry(modalInputValue);
+
+
+    // for storing to the firestore
+    if(currentUser){
+      const uniqueId = generateUniqueTimeBasedId()
+
+      addSubjectToUser(currentUser.uid, [{id: uniqueId, name: modalInputValue, questions: []}])
+    }
     const closeModalElement = document.querySelector(
       "[data-bs-dismiss='modal']"
     );
     if (closeModalElement) {
       closeModalElement.click();
     }
+
+
+
     setModalInputValue("");
   };
 

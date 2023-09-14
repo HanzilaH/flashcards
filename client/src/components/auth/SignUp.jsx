@@ -3,9 +3,14 @@ import "../../styles/SignUp.css";
 import { useState } from "react";
 import { auth } from "../../firebase/firebaseConfig.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import DataContext from "../../context/DataContext";
+import { useContext } from "react";
 
+import { createUser } from "../../context/DbFunctions";
 
 const SignUp = ({onSignInButtonClick}) => {
+
+  // const {createUser} = useContext(DataContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [userName, setUserName] = useState('')
@@ -15,8 +20,12 @@ const SignUp = ({onSignInButtonClick}) => {
         {
           e.preventDefault();
           createUserWithEmailAndPassword(auth, email, password)
+
+          
         .then((userCredential)=>{
-          console.log(userCredential);
+          console.log(userCredential.user.uid);
+          createUser(userCredential.user.uid, userName, email)
+
         }).catch((err)=>console.log(err))
       }
   

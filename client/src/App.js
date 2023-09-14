@@ -79,7 +79,7 @@ function App() {
       <Router>
           <Navbar />
           <Routes>
-          <Route path="/" element={<Authenticate />} />
+          <Route path="/" element={<><Authenticate /><Home></Home></>} />
 
 
 

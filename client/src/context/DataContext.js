@@ -2,8 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase/firebaseConfig';
-import { collection, query, getDocs, getDoc, where, doc } from 'firebase/firestore';
-
+import { collection, query, getDocs, setDoc, updateDoc,  getDoc, where, doc } from 'firebase/firestore';
 
 
 // Create a context with a default value (null in this case)
@@ -20,7 +19,7 @@ export const DataContextProvider = ({ children }) => {
     const fetchUserData = async () => {
       if (currentUser) {
         console.log('here');
-        const userDocRef = doc(db, 'users', currentUser.uid); // 'users' is the name of your collection
+        const userDocRef = doc(db, 'users', currentUser.uid); // 'users' is the name of my collection
     const userDoc = await getDoc(userDocRef);
 
 
@@ -30,6 +29,7 @@ export const DataContextProvider = ({ children }) => {
 
           
           const userData = userDoc.data();
+          console.log(userData);
 
           // Fetch additional data if needed
           const subjectsCollectionRef = collection(userDoc.ref, 'subjects');
@@ -39,7 +39,8 @@ export const DataContextProvider = ({ children }) => {
             id: doc.id,
           }));
 
-          userData.subjects = subjectsData;
+          // userData.subjects = subjectsData;
+          console.log(subjectsData);
           setUserData(userData);
         }
       }else{
@@ -49,6 +50,127 @@ export const DataContextProvider = ({ children }) => {
 
     fetchUserData();
   }, [currentUser]);
+
+
+
+// this works perfectly to create a user entry
+  async function createUser(uid, name, emailInput) {
+    try {
+      const userDocRef = doc(db, 'users', uid); // 'users' is the name of your collection
+      const userData = {
+        displayName: name,
+        email: emailInput,
+        subjects: []
+
+        // Add any other user data you want to store
+      };
+  
+      // Set the user document with the provided data
+      await setDoc(userDocRef, userData);
+  
+      console.log('User document created successfully.');
+  
+      return true;
+    } catch (error) {
+      console.error('Error creating user document:', error);
+      return false;
+    }
+  }
+
+
+
+  async function getUserByUID(uid) {
+    try {
+      const userDocRef = doc(db, 'users', uid); // 'users' is the name of your collection
+      const userDocSnapshot = await getDoc(userDocRef);
+  
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        console.log('User data:', userData);
+  
+        return userData;
+      } else {
+        console.log('User document does not exist.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      return null;
+    }
+  }
+
+
+  useEffect(()=>{
+    if(currentUser){
+      console.log(currentUser.uid);
+      getUserByUID(currentUser.uid)
+    }
+  }, [currentUser])
+
+  // async function createUserDocument(uid, displayName, email) {
+  //   try {
+  //     const userDocRef = doc(db, 'users', uid);
+  //     const userData = {
+  //       displayName,
+  //       email,
+  //       subjects: [] // Initialize the 'subjects' subcollection as an empty array
+  //     };
+  
+  //     await setDoc(userDocRef, userData);
+  //     return true; // Document creation successful
+  //   } catch (error) {
+  //     console.error('Error creating user document:', error);
+  //     return false; // Document creation failed
+  //   }
+  // }
+
+  
+  // async function addSubjectToUserDocument(uid, newSubjectData) {
+  //   try {
+  //     const userDocRef = doc(db, 'users', uid);
+  //     const userDocSnapshot = await getDoc(userDocRef);
+  
+  //     if (userDocSnapshot.exists()) {
+  //       const userDocData = userDocSnapshot.data();
+  //       console.log(userDocData);
+
+
+  //        // Fetch additional data if needed
+  //        const subjectsCollectionRef = collection(userDocSnapshot.ref, 'subjects');
+  //        const subjectsDocs = await getDocs(subjectsCollectionRef);
+  //        const subjectsData = subjectsDocs.docs.map((doc) => ({
+  //          ...doc.data(),
+  //          id: doc.id,
+  //        }));
+
+  //        // userData.subjects = subjectsData;
+  //        console.log(subjectsData);
+
+
+  //       const updatedSubjects = [...subjectsData, newSubjectData];
+  
+  //       // Update the 'subjects' field with the updated array
+  //       await updateDoc(userDocRef, { subjects: updatedSubjects });
+  //       return true; // Subject added successfully
+  //     } else {
+  //       console.error('User document does not exist.');
+  //       return false; // User document does not exist
+  //     }
+  //   } catch (error) {
+  //     console.error('Error adding subject to user document:', error);
+  //     return false; // Adding subject failed
+  //   }
+  // }
+
+  // useEffect(()=>{
+  //   addSubjectToUserDocument(currentUser.uid, {name:'sub for abc', questions:['q1'], answers: ['a1']})
+  // }, [currentUser])
+
+
+
+
+
+
 
 
 
@@ -186,7 +308,7 @@ export const DataContextProvider = ({ children }) => {
     };
   
     return (
-      <DataContext.Provider value={{ userData, data, pushData, currentSubject, setCurrentSubject, addSubjectEntry, removeEntryBySubject, removeQuestion, findQuestionArray, updateQuestionJson }}>
+      <DataContext.Provider value={{ userData, data, pushData, currentSubject, setCurrentSubject, addSubjectEntry, removeEntryBySubject, removeQuestion, findQuestionArray, updateQuestionJson, createUser }}>
         {children}
       </DataContext.Provider>
     );
