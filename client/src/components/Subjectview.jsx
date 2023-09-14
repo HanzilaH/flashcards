@@ -37,37 +37,48 @@ const Subjectview = (props) => {
   };
 
   useEffect(() => {
-    const transformedData = findQuestionArray(currentSubject).map((element) => {
-      const elementID = element.id;
 
-      // Create a new object with the updated property
-      // const updatedRemoveElementRef = { ...removeElementRef };
-      // updatedRemoveElementRef[elementID] = false;
+    if(currentSubject===null){
+      setQuestionArray(<>No Questions U dummy</>)
+    }else{
 
-      return (
-        <div key={element.id} className={`d-flex m-2 question-list-item `}>
-          <div className="flex-grow-1">
-            <div
-              onClick={() => onQuestionClick(element)}
-              className="list-group-item question  bg-transparent border-0"
-            >
-              {element.question}
+
+
+      const transformedData =  findQuestionArray().map((element) => {
+        const elementID = element.id;
+
+        console.log(element);
+  
+        // Create a new object with the updated property
+        // const updatedRemoveElementRef = { ...removeElementRef };
+        // updatedRemoveElementRef[elementID] = false;
+  
+        return (
+          <div key={element.id} className={`d-flex m-2 question-list-item `}>
+            <div className="flex-grow-1">
+              <div
+                onClick={() => onQuestionClick(element)}
+                className="list-group-item question  bg-transparent border-0"
+              >
+                {element.question}
+              </div>
+            </div>
+  
+            <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
+              <div
+                onClick={() => handleRemoveElement(element)}
+                className="trash-bin"
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </div>
             </div>
           </div>
+        );
+      });
+  
 
-          <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
-            <div
-              onClick={() => handleRemoveElement(element)}
-              className="trash-bin"
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </div>
-          </div>
-        </div>
-      );
-    });
-
-    setQuestionArray(transformedData);
+      setQuestionArray(transformedData);
+    }
   }, [data]);
 
   return (

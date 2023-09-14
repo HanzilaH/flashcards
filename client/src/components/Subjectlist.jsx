@@ -3,7 +3,7 @@ import DataContext from "../context/DataContext";
 import "../styles/Subjectlist.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { addSubjectToUser } from "../context/DbFunctions";
+import { addSubjectToUser, getSubjectsArray } from "../context/DbFunctions";
 import { useAuth } from "../context/AuthContext";
 import { serverTimestamp } from "firebase/firestore";
 
@@ -42,15 +42,8 @@ const Subjectlist = ({ onClickSubjectName }) => {
 
   useEffect(() => {
     const transformedData = data.map((element) => (
-      //   <li
-      //     key={element.id}
-      //     onClick={() => onClickSubjectName(element.subject)}
-      //     className="list-group-item"
-      //   >
-      //     {element.subject}
-      //   </li>
-      <div class="d-flex subject-list-item ">
-        <div class=" flex-grow-1">
+      <div className="d-flex subject-list-item ">
+        <div className=" flex-grow-1">
           <div
             key={element.id}
             onClick={() => onClickSubjectName(element.subject)}
@@ -97,6 +90,11 @@ const Subjectlist = ({ onClickSubjectName }) => {
       const uniqueId = generateUniqueTimeBasedId()
 
       addSubjectToUser(currentUser.uid, [{id: uniqueId, name: modalInputValue, questions: []}])
+
+
+  const subjectsArray = getSubjectsArray(currentUser.uid);
+  console.log('subject array from promise', subjectsArray);
+
     }
     const closeModalElement = document.querySelector(
       "[data-bs-dismiss='modal']"

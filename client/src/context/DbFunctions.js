@@ -3,8 +3,13 @@
 
 import React from "react";
 import { db } from "../firebase/firebaseConfig";
-import { collection, query, getDocs, setDoc, updateDoc,  getDoc, where, doc } from 'firebase/firestore';
+import {arrayUnion, collection, query, getDocs, setDoc, updateDoc,  getDoc, where, doc } from 'firebase/firestore';
 
+
+import { useState } from "react";
+
+
+ 
 
 
 // this works perfectly to create a user entry
@@ -33,22 +38,68 @@ export async function createUser(uid, name, emailInput) {
 
 
 // DONOT FORGET TO SEND THE IDS AS PART OF USER DATA
-  export async function addSubjectToUser(uid, subjectData) {
+export async function addSubjectToUser(uid, subjectData) {
     try {
       const userDocRef = doc(db, 'users', uid);
-      
-      await updateDoc(userDocRef, {
-        subjects: [...subjectData], // Add the new subject data to the existing 'subjects' array
-      });
   
-      console.log('Subject added to the user successfully.');
+      // Retrieve the current user document data
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
   
-      return true;
+
+
+        const combinedArray = [].concat(...userData.subjects, ...subjectData);
+
+  
+        // Update the user document with the modified 'subjects' array
+        await updateDoc(userDocRef, { subjects: combinedArray });
+  
+        console.log('Subject added to the user successfully.');
+  
+        return true;
+      } else {
+        console.error('User document does not exist.');
+        return false;
+      }
     } catch (error) {
       console.error('Error adding subject to the user:', error);
       return false;
     }
   }
+
+
+
+  export async function getSubjectsArray(uid) {
+    try {
+      const userDocRef = doc(db, 'users', uid);
+  
+      // Retrieve the current user document data
+      const userDoc = await getDoc(userDocRef);
+  
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+  
+        // Check if the 'subjects' array exists in the user data
+        if (userData && userData.subjects) {
+          return userData.subjects;
+        } else {
+          console.error('Subjects array not found in user data.');
+          return []; // Return an empty array if 'subjects' doesn't exist
+        }
+      } else {
+        console.error('User document does not exist.');
+        return null; // Return null if the user document doesn't exist
+      }
+    } catch (error) {
+      console.error('Error fetching subjects array:', error);
+      return null; // Return null in case of an error
+    }
+  }
+  
+
+
+
 
 
   export async function deleteSubjectFromUser(uid, subjectIdToDelete) {
@@ -88,6 +139,41 @@ export async function createUser(uid, name, emailInput) {
 
 
 
-
-
+export  async function addQuestionsToSubject(uid, subjectName, questionsArray) {
+    try {
+      const userDocRef = doc(db, 'users', uid);
+  
+      const userDoc = await getDoc(userDocRef);
+  
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+  
+        // Find the index of the subject with the matching name
+        const subjectIndex = userData.subjects.findIndex(
+          (subject) => subject.name === subjectName
+        );
+  
+        // If a subject with the matching name is found, update its 'questions' array
+        if (subjectIndex !== -1) {
+          userData.subjects[subjectIndex].questions = questionsArray;
+  
+          // Update the user document with the modified data
+          await updateDoc(userDocRef, userData);
+  
+          console.log('Questions added to the subject successfully.');
+          return true;
+        } else {
+          console.error('Subject with name not found.');
+          return false;
+        }
+      } else {
+        console.error('User document does not exist.');
+        return false;
+      }
+    } catch (error) {
+      console.error('Error updating user data:', error);
+      return false;
+    }
+  }
+  
 

@@ -3,6 +3,10 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase/firebaseConfig';
 import { collection, query, getDocs, setDoc, updateDoc,  getDoc, where, doc } from 'firebase/firestore';
+import { addQuestionsToSubject } from './DbFunctions';
+
+
+
 
 
 // Create a context with a default value (null in this case)
@@ -13,7 +17,35 @@ export const DataContextProvider = ({ children }) => {
 
   const {currentUser} = useAuth()
 
-  const [userData, setUserData] = useState(null);
+
+  const [data, setData] = useState(
+
+    [
+
+        {
+            subject: "sub1",
+            questions: [
+        {id:"1", question: "1", answer: "1a"}, 
+    {id:"2",question: "2", answer: "2a"}, 
+    {id:"3",question: "3", answer: "3a"}, 
+    {id:"4", question: "4", answer: "4a"}]
+        },
+        {
+            subject: "sub2",
+            questions: [
+              {id:"1", question: "1", answer: "1a"}, 
+          {id:"2",question: "2", answer: "2a"}, 
+          {id:"3",question: "3", answer: "3a"}, 
+          {id:"4", question: "4", answer: "4a"}]
+        }
+    ]
+    
+    );
+
+    const [currentSubject, setSubject] = useState("sub1")
+
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -29,22 +61,34 @@ export const DataContextProvider = ({ children }) => {
 
           
           const userData = userDoc.data();
-          console.log(userData);
+          console.log(userData.subjects);
 
-          // Fetch additional data if needed
-          const subjectsCollectionRef = collection(userDoc.ref, 'subjects');
-          const subjectsDocs = await getDocs(subjectsCollectionRef);
-          const subjectsData = subjectsDocs.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
 
-          // userData.subjects = subjectsData;
-          console.log(subjectsData);
-          setUserData(userData);
+
+
+
+          const transformedData = userData.subjects.map((sub)=>{
+
+            return {id:sub.id, subject: sub.name, questions: [{id:"1", question: "1", answer: "1a"}, {id:"2", question: "2", answer: "2a"}] }
+
+          })
+
+          // console.log(transformedData);
+          setData(transformedData)
+
+
+          // this was for a stupid attempt for a subcollection within a collection
+          // const subjectsCollectionRef = collection(userDoc.ref, 'subjects');
+          // const subjectsDocs = await getDocs(subjectsCollectionRef);
+          // const subjectsData = subjectsDocs.docs.map((doc) => ({
+          //   ...doc.data(),
+          //   id: doc.id,
+          // }));
+
+          // // userData.subjects = subjectsData;
+          // console.log(subjectsData);
         }
       }else{
-        setUserData(null)
       }
     };
 
@@ -53,29 +97,6 @@ export const DataContextProvider = ({ children }) => {
 
 
 
-// this works perfectly to create a user entry
-  async function createUser(uid, name, emailInput) {
-    try {
-      const userDocRef = doc(db, 'users', uid); // 'users' is the name of your collection
-      const userData = {
-        displayName: name,
-        email: emailInput,
-        subjects: []
-
-        // Add any other user data you want to store
-      };
-  
-      // Set the user document with the provided data
-      await setDoc(userDocRef, userData);
-  
-      console.log('User document created successfully.');
-  
-      return true;
-    } catch (error) {
-      console.error('Error creating user document:', error);
-      return false;
-    }
-  }
 
 
 
@@ -107,64 +128,26 @@ export const DataContextProvider = ({ children }) => {
     }
   }, [currentUser])
 
-  // async function createUserDocument(uid, displayName, email) {
-  //   try {
-  //     const userDocRef = doc(db, 'users', uid);
-  //     const userData = {
-  //       displayName,
-  //       email,
-  //       subjects: [] // Initialize the 'subjects' subcollection as an empty array
-  //     };
+
+
+  useEffect(()=>{
+
+   addQuestionsToSubject(currentUser.uid, currentSubject, data)
+   .then((success) => {
+    if (success) {
+      console.log('Subjects array updated successfully.');
+    } else {
+      console.error('Failed to update subjects array.');
+    }
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+  },[data])
+
+
   
-  //     await setDoc(userDocRef, userData);
-  //     return true; // Document creation successful
-  //   } catch (error) {
-  //     console.error('Error creating user document:', error);
-  //     return false; // Document creation failed
-  //   }
-  // }
-
-  
-  // async function addSubjectToUserDocument(uid, newSubjectData) {
-  //   try {
-  //     const userDocRef = doc(db, 'users', uid);
-  //     const userDocSnapshot = await getDoc(userDocRef);
-  
-  //     if (userDocSnapshot.exists()) {
-  //       const userDocData = userDocSnapshot.data();
-  //       console.log(userDocData);
-
-
-  //        // Fetch additional data if needed
-  //        const subjectsCollectionRef = collection(userDocSnapshot.ref, 'subjects');
-  //        const subjectsDocs = await getDocs(subjectsCollectionRef);
-  //        const subjectsData = subjectsDocs.docs.map((doc) => ({
-  //          ...doc.data(),
-  //          id: doc.id,
-  //        }));
-
-  //        // userData.subjects = subjectsData;
-  //        console.log(subjectsData);
-
-
-  //       const updatedSubjects = [...subjectsData, newSubjectData];
-  
-  //       // Update the 'subjects' field with the updated array
-  //       await updateDoc(userDocRef, { subjects: updatedSubjects });
-  //       return true; // Subject added successfully
-  //     } else {
-  //       console.error('User document does not exist.');
-  //       return false; // User document does not exist
-  //     }
-  //   } catch (error) {
-  //     console.error('Error adding subject to user document:', error);
-  //     return false; // Adding subject failed
-  //   }
-  // }
-
-  // useEffect(()=>{
-  //   addSubjectToUserDocument(currentUser.uid, {name:'sub for abc', questions:['q1'], answers: ['a1']})
-  // }, [currentUser])
 
 
 
@@ -173,47 +156,6 @@ export const DataContextProvider = ({ children }) => {
 
 
 
-
-
-    const [data, setData] = useState(
-
-        [
-
-            {
-                subject: "sub1",
-                questions: [
-            {id:"1", question: "1", answer: "1a"}, 
-        {id:"2",question: "2", answer: "2a"}, 
-        {id:"3",question: "3", answer: "3a"}, 
-        {id:"4", question: "4", answer: "4a"}]
-            },
-            {
-                subject: "sub2",
-                questions: [
-                  {id:"1", question: "1", answer: "1a"}, 
-              {id:"2",question: "2", answer: "2a"}, 
-              {id:"3",question: "3", answer: "3a"}, 
-              {id:"4", question: "4", answer: "4a"}]
-            },
-            {
-                subject: "sub3",
-                questions: [
-                  {id:"1", question: "1", answer: "1a"}, 
-              {id:"2",question: "2", answer: "2a"}, 
-              {id:"3",question: "3", answer: "3a"}, 
-              {id:"4", question: "4", answer: "4a"}]
-            },
-            {
-                subject: "sub4",
-                questions: [
-                  {id:"1", question: "1", answer: "1a"}, 
-              {id:"2",question: "2", answer: "2a"}, 
-              {id:"3",question: "3", answer: "3a"}, 
-              {id:"4", question: "4", answer: "4a"}]
-            }
-        ]
-        
-        );
         // const [data, setData] = useState([{question: "1", answer: "1a"}, {question: "2", answer: "2a"}, {question: "3", answer: "3a"}, {question: "4", answer: "4a"}]);
 
         const updateQuestionJson = ( subject, oldQuestion, newQuestion) => {
@@ -295,20 +237,21 @@ export const DataContextProvider = ({ children }) => {
           
 
 
-    const [currentSubject, setSubject] = useState("sub1")
     const setCurrentSubject = (data)=>{
         setSubject(data)
     }
 
 
-    const findQuestionArray = (subjectName) => {
-      const entry = data.find((entry) => entry.subject === subjectName);
+    const findQuestionArray = () => {
+
+      const entry = data.find((entry) => entry.subject === currentSubject);
+      console.log(entry);
     
-      return entry ? entry.questions : null;
+      return entry ? entry.questions : [];
     };
   
     return (
-      <DataContext.Provider value={{ userData, data, pushData, currentSubject, setCurrentSubject, addSubjectEntry, removeEntryBySubject, removeQuestion, findQuestionArray, updateQuestionJson, createUser }}>
+      <DataContext.Provider value={{  data, pushData, currentSubject, setCurrentSubject, addSubjectEntry, removeEntryBySubject, removeQuestion, findQuestionArray, updateQuestionJson }}>
         {children}
       </DataContext.Provider>
     );
