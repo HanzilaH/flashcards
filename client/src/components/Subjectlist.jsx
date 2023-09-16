@@ -7,38 +7,31 @@ import { addSubjectToUser, getSubjectsArray } from "../context/DbFunctions";
 import { useAuth } from "../context/AuthContext";
 import { serverTimestamp } from "firebase/firestore";
 
-
-
-
-
-
 const Subjectlist = ({ onClickSubjectName }) => {
+  const { currentUser } = useAuth();
 
+  const { data, addSubjectEntry, removeEntryBySubject } =
+    useContext(DataContext);
 
-
-  const {currentUser} = useAuth()
-
-
-  const { data, addSubjectEntry } = useContext(DataContext);
   const [modalInputValue, setModalInputValue] = useState("");
   const [subjectArray, setSubjectArray] = useState([]);
 
   const [errorValue, setErrorValue] = useState(null);
 
-  const generateUniqueTimeBasedId = ()=> {
+  const generateUniqueTimeBasedId = () => {
     // Get the current Unix timestamp (in milliseconds)
     const unixTimestamp = Date.now();
-  
+
     // Generate a random number or unique identifier
     // You can use a library like `uuid` for generating unique identifiers
     // For simplicity, we'll generate a random number here
     const uniqueIdentifier = Math.floor(Math.random() * 1000000); // Change as needed
-  
+
     // Concatenate the timestamp and unique identifier to create the unique ID
     const uniqueId = `${unixTimestamp}-${uniqueIdentifier}`;
-  
+
     return uniqueId;
-  }
+  };
 
   useEffect(() => {
     const transformedData = data.map((element) => (
@@ -55,7 +48,7 @@ const Subjectlist = ({ onClickSubjectName }) => {
 
         <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
           <div
-            // onClick={() => handleRemoveElement(element)}
+            onClick={() => removeEntryBySubject(element.subject)}
             className="subject-trash-bin"
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -84,17 +77,16 @@ const Subjectlist = ({ onClickSubjectName }) => {
 
     addSubjectEntry(modalInputValue);
 
-
     // for storing to the firestore
-    if(currentUser){
-      const uniqueId = generateUniqueTimeBasedId()
+    if (currentUser) {
+      const uniqueId = generateUniqueTimeBasedId();
 
-      addSubjectToUser(currentUser.uid, [{id: uniqueId, name: modalInputValue, questions: []}])
+      addSubjectToUser(currentUser.uid, [
+        { subject: modalInputValue, questions: [] },
+      ]);
 
-
-  const subjectsArray = getSubjectsArray(currentUser.uid);
-  console.log('subject array from promise', subjectsArray);
-
+      const subjectsArray = getSubjectsArray(currentUser.uid);
+      console.log("subject array from promise", subjectsArray);
     }
     const closeModalElement = document.querySelector(
       "[data-bs-dismiss='modal']"
@@ -102,8 +94,6 @@ const Subjectlist = ({ onClickSubjectName }) => {
     if (closeModalElement) {
       closeModalElement.click();
     }
-
-
 
     setModalInputValue("");
   };

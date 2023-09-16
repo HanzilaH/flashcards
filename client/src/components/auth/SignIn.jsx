@@ -1,47 +1,62 @@
 import React from "react";
-import Navbar from "../Navbar.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
-import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebaseConfig.js";
 import { useEffect, useState } from "react";
 import "../../styles/SignIn.css";
+import { useAuth } from "../../context/AuthContext.js";
 
-const SignIn = ({onSignUpButtonClick}) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+const SignIn = ({ onSignUpButtonClick, onSignInButtonClick }) => {
+  // for email and password states
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const signInUser=(e)=>{
+  const [warningTextValue, setWarningTextValue] = useState("");
+
+  const { login, logout, currentUser } = useAuth();
+
+  const signInUser = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential)=>{
-        console.log(userCredential);
-      }).catch((err)=>console.log(err))
 
-  }
+    if (email === "") {
+      setWarningTextValue("No email entered");
+      return;
+    } else if (password === "") {
+      setWarningTextValue("No password entered");
+      return;
+    }
 
-  const handleGoogle = async (e) => {
-    const provider = await new GoogleAuthProvider();
-    // signInWithPopup(auth, provider)
-    //   .then((re)=>{
-    //     console.log(re);
+    // so that the form becomes blank again
+    setEmail("");
+    setPassword("");
 
-    //   })
-    //   .catch((err)=>{
-    //     console.log(err);
-    //   })
+    // ADD SOME INPUT VALIDATION
 
-    return signInWithPopup(auth, provider);
+    if (currentUser) {
+      setWarningTextValue("You are already signed in");
+      return;
+    }
+
+    login(email, password)
+      .then((userCredential) => {
+        // console.log(userCredential);
+      })
+      .catch((err) => {
+        // console.log(err);
+        // PROCESS THE RETURNED RESULT HERE EG WRONG PASSWORD
+      });
+
+    // if all goes well then navigate to /home using this function
+    onSignInButtonClick();
   };
+
+  // Need to reset the warning if user types any word
+  useEffect(() => {
+    setWarningTextValue("");
+  }, [email, password]);
 
   return (
     <>
-      {/* <div style={{height:'75vh'}} classNameName=' d-flex justify-content-center align-items-center'>
-        <button onClick={handleGoogle}>
-            Sign In with Google
-        </button>
-
-    </div> */}
-
       <div className="w-100 d-flex justify-content-center">
         <form onSubmit={signInUser} className="form ">
           <div className="card_header">
@@ -70,10 +85,11 @@ const SignIn = ({onSignUpButtonClick}) => {
               type="email"
               placeholder="Email"
               id="sign-in-email"
-              onChange={(e)=>setEmail(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="row w-75 mb-5">
+          <div className="row w-75 mb-2">
             <label className="sign-in-label" htmlFor="password">
               Password
             </label>
@@ -83,41 +99,60 @@ const SignIn = ({onSignUpButtonClick}) => {
               type="password"
               placeholder="Password"
               id="sign-in-password"
-              onChange={(e)=>setPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
+          <div className="text-center m-3 sign-in-warning-text">
+            {warningTextValue}
+          </div>
 
-          <div className="container ">
-              <div className="row  justify-content-center">
-                <div className="col-auto">
-                  <button type="submit" className="sign-in-button">Login</button>
-                  <button onClick={onSignUpButtonClick} className="sign-in-button">Sign up</button>
+          <div className="w-75 d-flex  justify-content-end">
+            {/* this button changes the page to Sign Up component */}
 
-                </div>
-              </div>
+            <button type="submit" className="sign-in-button">
+              Login
+            </button>
+          </div>
+
+          <div className="row mt-4 w-100 separator">
+            <div className="col">
+              <hr />
+            </div>
+            <div
+              style={{
+                overflow: "auto",
+                // whiteSpace: 'nowrap',
+              }}
+              className="col text-center "
+            >
+              <p className="sign-in-label ">or sign in with</p>
             </div>
 
+            <div className="col">
+              <hr />
+            </div>
+          </div>
 
-            <div className="row mt-4 w-100 separator">
-              <div className="col">
-                <hr />
-              </div>
-              <div
-                style={{
-                  overflow: "auto",
-                  // whiteSpace: 'nowrap',
-                }}
-                className="col text-center "
+          <div>
+            <FontAwesomeIcon icon={faGoogle} />
+          </div>
+
+          {/* <hr /> */}
+          <div className="text-center w-100">
+            <hr />
+            <div className="sign-in-label">
+              No account?
+              <a
+                style={{ cursor: "pointer" }}
+                onClick={onSignUpButtonClick}
+                className="sign-in-label"
               >
-                <p className="sign-in-label ">Sign in with</p>
-              </div>
-
-              <div className="col">
-                <hr />
-              </div>
+                Sign up
+              </a>
             </div>
-
+          </div>
         </form>
       </div>
     </>

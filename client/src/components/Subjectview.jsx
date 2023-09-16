@@ -37,22 +37,18 @@ const Subjectview = (props) => {
   };
 
   useEffect(() => {
-
-    if(currentSubject===null){
-      setQuestionArray(<>No Questions U dummy</>)
-    }else{
-
-
-
-      const transformedData =  findQuestionArray().map((element) => {
+    if (currentSubject === null) {
+      setQuestionArray(<>No Questions U dummy</>);
+    } else {
+      const transformedData = findQuestionArray().map((element) => {
         const elementID = element.id;
 
         console.log(element);
-  
+
         // Create a new object with the updated property
         // const updatedRemoveElementRef = { ...removeElementRef };
         // updatedRemoveElementRef[elementID] = false;
-  
+
         return (
           <div key={element.id} className={`d-flex m-2 question-list-item `}>
             <div className="flex-grow-1">
@@ -63,7 +59,7 @@ const Subjectview = (props) => {
                 {element.question}
               </div>
             </div>
-  
+
             <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
               <div
                 onClick={() => handleRemoveElement(element)}
@@ -75,7 +71,6 @@ const Subjectview = (props) => {
           </div>
         );
       });
-  
 
       setQuestionArray(transformedData);
     }
@@ -125,7 +120,7 @@ const Subjectview = (props) => {
 
         <div className="w-100 d-flex justify-content-end">
           <button
-            onClick={() => navigate("/", { replace: true })}
+            onClick={() => navigate("/home", { replace: true })}
             className="subject-view-button"
           >
             <span>Back</span>

@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { db } from '../firebase/firebaseConfig';
 import { collection, query, getDocs, setDoc, updateDoc,  getDoc, where, doc } from 'firebase/firestore';
-import { addQuestionsToSubject } from './DbFunctions';
+import { addDataToSubjects } from './DbFunctions';
 
 
 
@@ -67,14 +67,14 @@ export const DataContextProvider = ({ children }) => {
 
 
 
-          const transformedData = userData.subjects.map((sub)=>{
+          // const transformedData = userData.subjects.map((sub)=>{
 
-            return {id:sub.id, subject: sub.name, questions: [{id:"1", question: "1", answer: "1a"}, {id:"2", question: "2", answer: "2a"}] }
+          //   return {id:sub.id, subject: sub.name, questions: [{id:"1", question: "1", answer: "1a"}, {id:"2", question: "2", answer: "2a"}] }
 
-          })
+          // })
 
           // console.log(transformedData);
-          setData(transformedData)
+          setData(userData.subjects)
 
 
           // this was for a stupid attempt for a subcollection within a collection
@@ -123,8 +123,11 @@ export const DataContextProvider = ({ children }) => {
 
   useEffect(()=>{
     if(currentUser){
+
       console.log(currentUser.uid);
       getUserByUID(currentUser.uid)
+    }else{
+      setData([])
     }
   }, [currentUser])
 
@@ -132,17 +135,22 @@ export const DataContextProvider = ({ children }) => {
 
   useEffect(()=>{
 
-   addQuestionsToSubject(currentUser.uid, currentSubject, data)
-   .then((success) => {
-    if (success) {
-      console.log('Subjects array updated successfully.');
-    } else {
-      console.error('Failed to update subjects array.');
+
+    if (currentUser){
+
+      addDataToSubjects(currentUser.uid,  data)
+      .then((success) => {
+       if (success) {
+         console.log('Subjects array updated successfully.');
+       } else {
+         console.error('Failed to update subjects array.');
+       }
+     })
+     .catch((error) => {
+       console.error('Error:', error);
+     });
     }
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+
 
   },[data])
 
@@ -214,6 +222,7 @@ export const DataContextProvider = ({ children }) => {
                 questions: []
             }])
         }
+        
 
         const removeEntryBySubject = (subjectName) => {
           setData((prevData) =>

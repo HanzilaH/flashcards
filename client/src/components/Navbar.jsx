@@ -1,6 +1,26 @@
 import React from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  // currentUser for the login/logout states
+  // the logout function from AuthContext handles the logout procedure
+  const { currentUser, logout } = useAuth();
+
+  const navigate = useNavigate(); // Get the navigate function
+
+  const handleLoginClickForNavBar = () => {
+    // the replace property stops the user from coming back
+    navigate("/", { replace: true });
+  };
+
+  const handleLogoutClickForNavBar = () => {
+    logout();
+
+    // each user should go to authentication page after logging out
+    navigate("/", { replace: true });
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -34,7 +54,11 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <div className="nav-link active mx-3" aria-current="page">
-                  Login
+                  {currentUser ? (
+                    <button onClick={handleLogoutClickForNavBar}>Logout</button>
+                  ) : (
+                    <button onClick={handleLoginClickForNavBar}>Login</button>
+                  )}
                 </div>
               </li>
             </ul>

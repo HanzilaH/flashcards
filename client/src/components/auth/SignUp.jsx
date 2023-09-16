@@ -5,40 +5,53 @@ import { auth } from "../../firebase/firebaseConfig.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import DataContext from "../../context/DataContext";
 import { useContext } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 import { createUser } from "../../context/DbFunctions";
 
-const SignUp = ({onSignInButtonClick}) => {
-
+const SignUp = ({ onSignInButtonClick, onSignUpButtonClick }) => {
   // const {createUser} = useContext(DataContext)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [warningTextValue, setWarningTextValue] = useState("");
 
+  const { login, logout, signup, currentUser } = useAuth();
 
-    const signUpUser = (e)=>
-        {
-          e.preventDefault();
-          createUserWithEmailAndPassword(auth, email, password)
+  const signUpUser = (e) => {
+    e.preventDefault();
 
-          
-        .then((userCredential)=>{
-          console.log(userCredential.user.uid);
-          createUser(userCredential.user.uid, userName, email)
+    setEmail("");
+    setPassword("");
+    setUserName("");
 
-        }).catch((err)=>console.log(err))
-      }
-  
+    // ADD SOME INPUT VALIDATION
 
+    if (currentUser) {
+      setWarningTextValue("Another user is signed in");
+      return;
+    }
 
+    signup(email, password)
+      .then((userCredential) => {
+        console.log(userCredential.user.uid);
 
+        // To create a user entry in the "users" collection
+        createUser(userCredential.user.uid, userName, email);
+      })
+      .catch((err) => {
+        // console.log(err)
+        // PROCESS THE RETURNED RESULT HERE EG SAME EMAIL
+      });
 
-
+    // if all goes well then navigate to /home using this function
+    onSignUpButtonClick();
+  };
 
   return (
     <>
       <div className="w-100 d-flex justify-content-center">
-        <form  onSubmit={signUpUser}>
+        <form onSubmit={signUpUser}>
           <div className="form ">
             <div className="card_header">
               <svg
@@ -66,7 +79,8 @@ const SignUp = ({onSignInButtonClick}) => {
                 type="text"
                 placeholder="Username"
                 id="sign-up-username"
-                onChange={(e)=>setUserName(e.target.value)}
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
               />
             </div>
 
@@ -80,7 +94,9 @@ const SignUp = ({onSignInButtonClick}) => {
                 type="text"
                 placeholder="Username"
                 id="sign-up-email"
-                onChange={(e)=>setEmail(e.target.value)}              />
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="flex-column d-flex mb-5">
               <label className="sign-up-label" htmlFor="password">
@@ -92,14 +108,27 @@ const SignUp = ({onSignInButtonClick}) => {
                 type="password"
                 placeholder="Password"
                 id="sign-up-password"
-                onChange={(e)=>setPassword(e.target.value)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+
+            <div className="text-center mb-4 sign-up-warning-text">
+              {warningTextValue}
+            </div>
+
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-auto">
-                  <button type="submit" className="sign-up-button">Sign up</button>
-                  <button onClick={onSignInButtonClick} className="sign-up-button">Login</button>
+                  <button
+                    onClick={onSignInButtonClick}
+                    className="sign-up-button"
+                  >
+                    Login
+                  </button>
+                  <button type="submit" className="sign-up-button">
+                    Sign up
+                  </button>
                 </div>
               </div>
             </div>

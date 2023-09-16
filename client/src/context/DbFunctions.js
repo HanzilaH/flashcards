@@ -139,41 +139,29 @@ export async function addSubjectToUser(uid, subjectData) {
 
 
 
-export  async function addQuestionsToSubject(uid, subjectName, questionsArray) {
+export  async function addDataToSubjects(uid, data) {
+  console.log(data);
     try {
+      // Reference to the user's document in Firestore
       const userDocRef = doc(db, 'users', uid);
-  
-      const userDoc = await getDoc(userDocRef);
-  
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-  
-        // Find the index of the subject with the matching name
-        const subjectIndex = userData.subjects.findIndex(
-          (subject) => subject.name === subjectName
-        );
-  
-        // If a subject with the matching name is found, update its 'questions' array
-        if (subjectIndex !== -1) {
-          userData.subjects[subjectIndex].questions = questionsArray;
-  
-          // Update the user document with the modified data
-          await updateDoc(userDocRef, userData);
-  
-          console.log('Questions added to the subject successfully.');
-          return true;
-        } else {
-          console.error('Subject with name not found.');
-          return false;
-        }
-      } else {
-        console.error('User document does not exist.');
-        return false;
+      const userDocSnapshot = await getDoc(userDocRef);
+
+
+      // const userRef = db.collection('users').doc(uid);
+      if (userDocSnapshot.exists()) {
+        // const userData = userDocSnapshot.data();
+
+        await updateDoc(userDocRef, {
+          subjects: data,
+        });
+
       }
+  
+
+  
+      console.log(`Data updated for UID: ${uid}`);
     } catch (error) {
-      console.error('Error updating user data:', error);
-      return false;
+      console.error(`Error updating data for UID ${uid}: ${error}`);
     }
   }
-  
 
