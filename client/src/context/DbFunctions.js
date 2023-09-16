@@ -140,7 +140,7 @@ export async function addSubjectToUser(uid, subjectData) {
 
 
 export  async function addDataToSubjects(uid, data) {
-  console.log(data);
+  // console.log(data);
     try {
       // Reference to the user's document in Firestore
       const userDocRef = doc(db, 'users', uid);
@@ -159,7 +159,7 @@ export  async function addDataToSubjects(uid, data) {
   
 
   
-      console.log(`Data updated for UID: ${uid}`);
+      // console.log(`Data updated for UID: ${uid}`);
     } catch (error) {
       console.error(`Error updating data for UID ${uid}: ${error}`);
     }

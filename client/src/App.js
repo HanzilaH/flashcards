@@ -27,6 +27,13 @@ function App() {
   const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, 'users');
 
+  useEffect(() => {
+    // This code will run when the component mounts (i.e., when the app starts)
+
+    // Display an alert or any other action you want to perform
+    alert('This webpage is still under development!\nUse the email: a@gmail.com and password: 1234567 for testing \nAnd drop ur suggestions \nRegards, \nHanzila');
+  }, []);
+
 
   return (
 
@@ -49,8 +56,6 @@ function App() {
             <Route path="/subject" element={<Subject />} />
           </Routes>
 
-          <Home/>
-          <Subject/>
       </Router>
         
             

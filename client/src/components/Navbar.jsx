@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "./../styles/Navbar.css";
 
 const Navbar = () => {
   // currentUser for the login/logout states
@@ -55,9 +56,19 @@ const Navbar = () => {
               <li className="nav-item">
                 <div className="nav-link active mx-3" aria-current="page">
                   {currentUser ? (
-                    <button onClick={handleLogoutClickForNavBar}>Logout</button>
+                    <button
+                      className="navbar-button"
+                      onClick={handleLogoutClickForNavBar}
+                    >
+                      Logout
+                    </button>
                   ) : (
-                    <button onClick={handleLoginClickForNavBar}>Login</button>
+                    <button
+                      className="navbar-button"
+                      onClick={handleLoginClickForNavBar}
+                    >
+                      Login
+                    </button>
                   )}
                 </div>
               </li>

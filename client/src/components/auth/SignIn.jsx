@@ -137,7 +137,12 @@ const SignIn = ({ onSignUpButtonClick, onSignInButtonClick }) => {
             </div>
           </div>
 
-          <div>
+          <div
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => alert("Feature not implement yet")}
+          >
             <FontAwesomeIcon icon={faGoogle} />
           </div>
 

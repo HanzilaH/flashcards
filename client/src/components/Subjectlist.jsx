@@ -34,28 +34,39 @@ const Subjectlist = ({ onClickSubjectName }) => {
   };
 
   useEffect(() => {
-    const transformedData = data.map((element) => (
-      <div className="d-flex subject-list-item ">
-        <div className=" flex-grow-1">
+    const transformedData = data.map((element) => {
+      return (
+        <div key={element.id} className="d-flex subject-list-item m-3">
+          {/* <div
+            style={{
+              whiteSpace: "pre-wrap",
+              wordWrap: "break-word",
+            }}
+            className="subject w-100"
+          > */}
           <div
-            key={element.id}
+            style={{
+              whiteSpace: "pre-wrap",
+              wordWrap: "break-word",
+            }}
             onClick={() => onClickSubjectName(element.subject)}
-            className="subject bg-transparent m-0 p-2"
+            className=" w-100 bg-transparent m-0 p-2"
           >
             {element.subject}
           </div>
-        </div>
+          {/* </div> */}
 
-        <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
-          <div
-            onClick={() => removeEntryBySubject(element.subject)}
-            className="subject-trash-bin"
-          >
-            <FontAwesomeIcon icon={faTrash} />
+          <div className="p-2 bg-transparent flex-shrink-1 d-flex align-items-center justify-content-center">
+            <div
+              onClick={() => removeEntryBySubject(element.subject)}
+              className="subject-trash-bin"
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </div>
           </div>
         </div>
-      </div>
-    ));
+      );
+    });
 
     setSubjectArray(transformedData);
   }, [data, onClickSubjectName]);
@@ -104,7 +115,11 @@ const Subjectlist = ({ onClickSubjectName }) => {
         <div>
           <h1>Subjects</h1>
           <ul id="subject-list" className="list-group list-group-flush">
-            {subjectArray}
+            {subjectArray.length === 0 ? (
+              <div className="m-2">Add subjects to start</div>
+            ) : (
+              subjectArray
+            )}
           </ul>
         </div>
 
@@ -145,6 +160,7 @@ const Subjectlist = ({ onClickSubjectName }) => {
                   value={modalInputValue}
                   onChange={(e) => setModalInputValue(e.target.value)}
                 />
+
                 <div className="text-center subject-list-error">
                   {errorValue ? errorValue : null}
                 </div>

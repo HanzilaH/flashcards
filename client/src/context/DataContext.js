@@ -50,18 +50,18 @@ export const DataContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       if (currentUser) {
-        console.log('here');
+        // console.log('here');
         const userDocRef = doc(db, 'users', currentUser.uid); // 'users' is the name of my collection
     const userDoc = await getDoc(userDocRef);
 
 
-        console.log(userDoc);
+        // console.log(userDoc);
         if (userDoc.exists()) {
-          console.log(userDoc);
+          // console.log(userDoc);
 
           
           const userData = userDoc.data();
-          console.log(userData.subjects);
+          // console.log(userData.subjects);
 
 
 
@@ -107,7 +107,7 @@ export const DataContextProvider = ({ children }) => {
   
       if (userDocSnapshot.exists()) {
         const userData = userDocSnapshot.data();
-        console.log('User data:', userData);
+        // console.log('User data:', userData);
   
         return userData;
       } else {
@@ -124,7 +124,7 @@ export const DataContextProvider = ({ children }) => {
   useEffect(()=>{
     if(currentUser){
 
-      console.log(currentUser.uid);
+      // console.log(currentUser.uid);
       getUserByUID(currentUser.uid)
     }else{
       setData([])
@@ -143,7 +143,7 @@ export const DataContextProvider = ({ children }) => {
        if (success) {
          console.log('Subjects array updated successfully.');
        } else {
-         console.error('Failed to update subjects array.');
+        //  console.error('Failed to update subjects array.');
        }
      })
      .catch((error) => {
@@ -254,7 +254,7 @@ export const DataContextProvider = ({ children }) => {
     const findQuestionArray = () => {
 
       const entry = data.find((entry) => entry.subject === currentSubject);
-      console.log(entry);
+      // console.log(entry);
     
       return entry ? entry.questions : [];
     };

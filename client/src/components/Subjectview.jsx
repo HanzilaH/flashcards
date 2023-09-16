@@ -79,7 +79,10 @@ const Subjectview = (props) => {
   return (
     <>
       <div className="subject-view-section">
-        <div className="d-flex align-items-center">
+        <div
+          style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}
+          className="d-flex align-items-center"
+        >
           <div className="p-2 w-75">
             <h1>{currentSubject}</h1>
           </div>
