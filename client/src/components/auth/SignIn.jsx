@@ -26,28 +26,30 @@ const SignIn = ({ onSignUpButtonClick, onSignInButtonClick }) => {
       return;
     }
 
-    // so that the form becomes blank again
-    setEmail("");
-    setPassword("");
-
     // ADD SOME INPUT VALIDATION
 
     if (currentUser) {
       setWarningTextValue("You are already signed in");
+      // so that the form becomes blank again
+      setEmail("");
+      setPassword("");
       return;
     }
+
+    // so that the form becomes blank again
+    setEmail("");
+    setPassword("");
 
     login(email, password)
       .then((userCredential) => {
         // console.log(userCredential);
+        // if all goes well then navigate to /home using this function
+        onSignInButtonClick();
       })
       .catch((err) => {
         // console.log(err);
         // PROCESS THE RETURNED RESULT HERE EG WRONG PASSWORD
       });
-
-    // if all goes well then navigate to /home using this function
-    onSignInButtonClick();
   };
 
   // Need to reset the warning if user types any word

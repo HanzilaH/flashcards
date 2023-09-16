@@ -1,10 +1,8 @@
 import React from "react";
 import "../../styles/SignUp.css";
-import { useState } from "react";
-import { auth } from "../../firebase/firebaseConfig.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import DataContext from "../../context/DataContext";
-import { useContext } from "react";
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useAuth } from "../../context/AuthContext";
 
 import { createUser } from "../../context/DbFunctions";
@@ -21,9 +19,15 @@ const SignUp = ({ onSignInButtonClick, onSignUpButtonClick }) => {
   const signUpUser = (e) => {
     e.preventDefault();
 
-    setEmail("");
-    setPassword("");
-    setUserName("");
+    if (userName === "") {
+      setWarningTextValue("No username entered");
+      return;
+    } else if (email === "") {
+      setWarningTextValue("No email entered");
+      return;
+    } else if (password === "") {
+      setWarningTextValue("No password entered");
+    }
 
     // ADD SOME INPUT VALIDATION
 
@@ -38,15 +42,24 @@ const SignUp = ({ onSignInButtonClick, onSignUpButtonClick }) => {
 
         // To create a user entry in the "users" collection
         createUser(userCredential.user.uid, userName, email);
+
+        // if all goes well then navigate to /home using this function
+        onSignUpButtonClick();
       })
       .catch((err) => {
         // console.log(err)
         // PROCESS THE RETURNED RESULT HERE EG SAME EMAIL
       });
 
-    // if all goes well then navigate to /home using this function
-    onSignUpButtonClick();
+    setEmail("");
+    setPassword("");
+    setUserName("");
   };
+
+  // Need to reset the warning if user types any word
+  useEffect(() => {
+    setWarningTextValue("");
+  }, [email, password, userName]);
 
   return (
     <>
@@ -77,7 +90,7 @@ const SignUp = ({ onSignInButtonClick, onSignUpButtonClick }) => {
                 className="sign-up-input"
                 name="username"
                 type="text"
-                placeholder="Username"
+                // placeholder="Username"
                 id="sign-up-username"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
@@ -92,13 +105,13 @@ const SignUp = ({ onSignInButtonClick, onSignUpButtonClick }) => {
                 className="sign-up-input"
                 name="email"
                 type="text"
-                placeholder="Username"
+                // placeholder="Email address"
                 id="sign-up-email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="flex-column d-flex mb-5">
+            <div className="flex-column d-flex mb-3">
               <label className="sign-up-label" htmlFor="password">
                 Password
               </label>
@@ -106,31 +119,21 @@ const SignUp = ({ onSignInButtonClick, onSignUpButtonClick }) => {
                 className="sign-up-input"
                 name="user_password"
                 type="password"
-                placeholder="Password"
+                // placeholder="Password"
                 id="sign-up-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
-            <div className="text-center mb-4 sign-up-warning-text">
+            <div className="text-center mb-3 sign-up-warning-text">
               {warningTextValue}
             </div>
 
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-auto">
-                  <button
-                    onClick={onSignInButtonClick}
-                    className="sign-up-button"
-                  >
-                    Login
-                  </button>
-                  <button type="submit" className="sign-up-button">
-                    Sign up
-                  </button>
-                </div>
-              </div>
+            <div className="w-100 d-flex justify-content-center">
+              <button type="submit" className="sign-up-button">
+                Sign up
+              </button>
             </div>
 
             <div className="row mt-4 w-100 separator">
@@ -144,11 +147,33 @@ const SignUp = ({ onSignInButtonClick, onSignUpButtonClick }) => {
                 }}
                 className="col text-center "
               >
-                <p className="sign-in-label ">Sign in with</p>
+                <p className="sign-in-label ">or Sign up with</p>
               </div>
 
               <div className="col">
                 <hr />
+              </div>
+            </div>
+
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => alert("Feature not implement yet")}
+            >
+              <FontAwesomeIcon icon={faGoogle} />
+            </div>
+
+            {/* <hr /> */}
+            <div className="text-center p-0 m-0 w-100">
+              <hr />
+              <div className="sign-in-label">
+                Already have account?
+                <a
+                  style={{ cursor: "pointer" }}
+                  onClick={onSignInButtonClick}
+                  className="sign-in-label pointer"
+                >
+                  Sign in
+                </a>
               </div>
             </div>
           </div>

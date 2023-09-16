@@ -75,3 +75,9 @@
   .sign-up-button:hover {
     background-color: #5f5f9c;
   }
+
+
+  .sign-up-warning-text{
+    color: rgb(251, 47, 47);
+    font-size: 14px;
+  }
