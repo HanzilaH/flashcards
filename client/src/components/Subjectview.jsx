@@ -35,11 +35,20 @@ const Subjectview = (props) => {
     // }, 10);
   };
 
+  const [showQuestionLabel, setShowQuestionLabel] = useState(true);
+
   useEffect(() => {
-    if (currentSubject === null) {
-      setQuestionArray(<>No Questions U dummy</>);
+    const arr = findQuestionArray();
+    if (arr.length === 0) {
+      setShowQuestionLabel(false);
+      setQuestionArray(
+        <div className="d-flex px-3 justify-content-center align-items-center ">
+          Click add button to add more Questions <hr />
+        </div>
+      );
     } else {
-      const transformedData = findQuestionArray().map((element) => {
+      setShowQuestionLabel(true);
+      const transformedData = arr.map((element) => {
         const elementID = element.id;
 
         console.log(element);
@@ -77,7 +86,7 @@ const Subjectview = (props) => {
 
       setQuestionArray(transformedData);
     }
-  }, [data]);
+  }, [currentSubject]);
 
   return (
     <>
@@ -116,7 +125,10 @@ const Subjectview = (props) => {
 
         <div className="d-flex justify-content-center">
           <div className=" w-75 question-list-card">
-            <div id="question-label">Questions:</div>
+            <div id="question-label">
+              {" "}
+              {showQuestionLabel ? "Questions:" : null}
+            </div>
             <div>{questionArray}</div>
           </div>
         </div>
