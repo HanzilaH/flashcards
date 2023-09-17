@@ -26,7 +26,14 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-md container-sm">
-          <div className="navbar-brand">Flashcard.io</div>
+          <div className="">
+            <img
+              style={{ height: "1.3rem" }}
+              src="logo.png"
+              alt="Logo"
+              className="navbar-logo"
+            />
+          </div>
 
           <button
             className="navbar-toggler"
@@ -41,38 +48,32 @@ const Navbar = () => {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto mb-2">
-              <li className="nav-item">
-                <div className="nav-link active mx-3" aria-current="page">
-                  Home
-                </div>
-              </li>
+            <div className="navbar-nav ms-auto ">
+              <div className="my-2 flashcard-nav-link mx-3" aria-current="page">
+                Home
+              </div>
 
-              <li className="nav-item">
-                <div className="nav-link active mx-3" aria-current="page">
-                  Planner
-                </div>
-              </li>
-              <li className="nav-item">
-                <div className="nav-link active mx-3" aria-current="page">
-                  {currentUser ? (
-                    <button
-                      className="navbar-button"
-                      onClick={handleLogoutClickForNavBar}
-                    >
-                      Logout
-                    </button>
-                  ) : (
-                    <button
-                      className="navbar-button"
-                      onClick={handleLoginClickForNavBar}
-                    >
-                      Login
-                    </button>
-                  )}
-                </div>
-              </li>
-            </ul>
+              <div className="my-2 flashcard-nav-link mx-3" aria-current="page">
+                Planner
+              </div>
+              <div className="my-2  mx-3" aria-current="page">
+                {currentUser ? (
+                  <button
+                    className="navbar-button"
+                    onClick={handleLogoutClickForNavBar}
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    className="navbar-button"
+                    onClick={handleLoginClickForNavBar}
+                  >
+                    Login
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </nav>

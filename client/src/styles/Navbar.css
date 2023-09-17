@@ -16,3 +16,32 @@
     box-shadow: inset 4px 4px 12px #c5c5c5,
                 inset -4px -4px 12px #ffffff;
    }
+
+
+   .navbar-button:hover {
+    background-color: #36106c8b; /* Change to your desired hover background color */
+  }
+
+
+
+
+
+    .flashcard-nav-link {
+        font-size: 18px;
+        color: #52338174;
+        font-family: inherit;
+        font-weight: 400;
+        cursor: pointer;
+        transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all 400ms;
+      }
+      
+      .flashcard-nav-link:hover {
+        color: #48096a;
+        border-bottom: 2px solid #48096a; /* Adjust color and thickness as needed */
+
+      }
+
+.navbar{
+    background: linear-gradient(270deg, #d7c6ed03, #ebc4f229)
+}
