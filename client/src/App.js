@@ -31,7 +31,7 @@ function App() {
     // This code will run when the component mounts (i.e., when the app starts)
 
     // Display an alert or any other action you want to perform
-    alert('This webpage is still under development!\nUse the email: flashcards@gmail.com and password: flashcard for testing \n \nAnd drop ur suggestions \n\nRegards, \nYour fav person,\nHanzila');
+    alert('This webpage is still under development!\nUse the email: flashcards@gmail.com and password: flashcard\n for testing \n \nAnd drop ur suggestions \n\nRegards, \nYour fav person,\nHanzila');
   }, []);
 
 
