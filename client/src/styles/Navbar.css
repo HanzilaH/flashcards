@@ -27,6 +27,7 @@
 
 
     .flashcard-nav-link {
+        width: fit-content;
         font-size: 18px;
         color: #52338174;
         font-family: inherit;

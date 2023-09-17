@@ -2,8 +2,9 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Navbar.css";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ onHomeButtonClick }) => {
   // currentUser for the login/logout states
   // the logout function from AuthContext handles the logout procedure
   const { currentUser, logout } = useAuth();
@@ -12,6 +13,7 @@ const Navbar = () => {
 
   const handleLoginClickForNavBar = () => {
     // the replace property stops the user from coming back
+
     navigate("/", { replace: true });
   };
 
@@ -20,6 +22,12 @@ const Navbar = () => {
 
     // each user should go to authentication page after logging out
     navigate("/", { replace: true });
+  };
+
+  const handleHomeClick = () => {
+    if (currentUser) {
+      onHomeButtonClick();
+    }
   };
 
   return (
@@ -49,8 +57,10 @@ const Navbar = () => {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <div className="navbar-nav ms-auto ">
-              <div className="my-2 flashcard-nav-link mx-3" aria-current="page">
-                Home
+              <div className="my-2 mx-3" aria-current="page">
+                <div className=" flashcard-nav-link " onClick={handleHomeClick}>
+                  Home
+                </div>
               </div>
 
               <div className="my-2 flashcard-nav-link mx-3" aria-current="page">

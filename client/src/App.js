@@ -26,13 +26,16 @@ function App() {
   const {userData} = useContext(DataContext) 
   const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, 'users');
+  
 
   useEffect(() => {
     // This code will run when the component mounts (i.e., when the app starts)
 
     // Display an alert or any other action you want to perform
-    alert('This webpage is still under development!\nUse the email: flashcards@gmail.com and password: flashcard\n for testing \n \nAnd drop ur suggestions \n\nRegards, \nYour fav person,\nHanzila');
+    alert('Message from ur Fav person Hanzila:\n\nUse the email: flashcards@gmail.com and password: flashcard\n for testing \n \nAnd drop ur suggestions \n\nRegards, ');
   }, []);
+
+
 
 
   return (
@@ -42,7 +45,6 @@ function App() {
 
 
       <Router>
-          <Navbar />
 
           <Routes>
           <Route path="/" element={<><Authenticate /></>} />
@@ -53,7 +55,6 @@ function App() {
 
 
             <Route path="/home" element={<Home />} />
-            <Route path="/subject" element={<Subject />} />
           </Routes>
 
       </Router>

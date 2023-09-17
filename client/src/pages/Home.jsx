@@ -7,6 +7,7 @@ import Subject from "./Subject";
 import Subjectview from "../components/Subjectview";
 import Subjectflash from "../components/Subjectflash";
 import QuestionStore from "../components/QuestionStore";
+import Navbar from "../components/Navbar";
 
 const Home = () => {
   const { currentSubject, setCurrentSubject } = useContext(DataContext);
@@ -45,8 +46,16 @@ const Home = () => {
     setShowSubjectFlash(!showSubjectFlash);
   };
 
+  const handleNavbarHomeClicked = () => {
+    setShowSubjectView(false);
+    setShowSubjectFlash(false);
+    setShowSubjectList(true);
+    setShowQuestionStore(false);
+  };
+
   return (
     <>
+      <Navbar onHomeButtonClick={handleNavbarHomeClicked}></Navbar>
       {showSubjectList ? (
         <Subjectlist
           onClickSubjectName={(e) => handleSubjectNameClick(e)}
