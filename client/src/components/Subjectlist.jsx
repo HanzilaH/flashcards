@@ -19,15 +19,9 @@ const Subjectlist = ({ onClickSubjectName }) => {
   const [errorValue, setErrorValue] = useState(null);
 
   const generateUniqueTimeBasedId = () => {
-    // Get the current Unix timestamp (in milliseconds)
     const unixTimestamp = Date.now();
+    const uniqueIdentifier = Math.floor(Math.random() * 1000000);
 
-    // Generate a random number or unique identifier
-    // You can use a library like `uuid` for generating unique identifiers
-    // For simplicity, we'll generate a random number here
-    const uniqueIdentifier = Math.floor(Math.random() * 1000000); // Change as needed
-
-    // Concatenate the timestamp and unique identifier to create the unique ID
     const uniqueId = `${unixTimestamp}-${uniqueIdentifier}`;
 
     return uniqueId;
@@ -36,38 +30,35 @@ const Subjectlist = ({ onClickSubjectName }) => {
   useEffect(() => {
     const transformedData = data.map((element) => {
       return (
-        <div key={element.id} className="d-flex subject-list-item m-3">
-          {/* <div
-            style={{
-              whiteSpace: "pre-wrap",
-              wordWrap: "break-word",
-            }}
-            className="subject w-100"
-          > */}
+        <>
           <div
-            style={{
-              whiteSpace: "pre-wrap",
-              wordWrap: "break-word",
-            }}
-            onClick={() => onClickSubjectName(element.subject)}
-            className=" w-100 bg-transparent m-0 p-2"
+            key={element.id}
+            className="d-flex me-2 ms-3 mt-2 mb-3 subject-list-item"
           >
-            {element.subject}
-          </div>
-          {/* </div> */}
-
-          <div className="p-2 bg-transparent flex-shrink-1 d-flex align-items-center justify-content-center">
             <div
-              onClick={() => removeEntryBySubject(element.subject)}
-              className="subject-trash-bin"
+              style={{
+                whiteSpace: "pre-wrap",
+                wordWrap: "break-word",
+                overflow: "auto",
+              }}
+              onClick={() => onClickSubjectName(element.subject)}
+              className="p-2 subject flex-grow-1"
             >
-              <FontAwesomeIcon icon={faTrash} />
+              {element.subject}
+            </div>
+
+            <div className=" p-2 bg-transparent d-flex align-items-center justify-content-center">
+              <div
+                onClick={() => removeEntryBySubject(element.subject)}
+                className="trash-bin"
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </div>
             </div>
           </div>
-        </div>
+        </>
       );
     });
-
     setSubjectArray(transformedData);
   }, [data, onClickSubjectName]);
 
@@ -90,6 +81,7 @@ const Subjectlist = ({ onClickSubjectName }) => {
 
     // for storing to the firestore
     if (currentUser) {
+      // not using the unique id for each subject for now but will implement in the future
       const uniqueId = generateUniqueTimeBasedId();
 
       addSubjectToUser(currentUser.uid, [
@@ -111,26 +103,33 @@ const Subjectlist = ({ onClickSubjectName }) => {
 
   return (
     <>
-      <div id="subject-list-section" className="mt-3">
-        <div>
+      <div className="subject-list-section">
+        <div className="text-center m-3">
           <h1>Subjects</h1>
-          <ul id="subject-list" className="list-group list-group-flush">
-            {subjectArray.length === 0 ? (
-              <div className="m-2">Add subjects to start</div>
-            ) : (
-              subjectArray
-            )}
-          </ul>
         </div>
 
-        <button
-          type="button"
-          className="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Add Subject
-        </button>
+        <div className="d-flex justify-content-center">
+          <div className="w-50 subject-list-card">
+            <div>
+              {subjectArray.length === 0 ? (
+                <div className="m-2">Add subjects to start</div>
+              ) : (
+                subjectArray
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className=" w-75 d-flex justify-content-end">
+          <button
+            id="add-subject-button"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Add Subject
+          </button>
+        </div>
 
         <div
           className="modal fade"

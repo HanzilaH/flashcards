@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataContext from "../context/DataContext";
 import Subjectview from "../components/Subjectview";
 import Subjectflash from "../components/Subjectflash";
 import QuestionStore from "../components/QuestionStore";
-
+import { useNavigate } from "react-router-dom";
 const Subject = () => {
   const [showSubjectView, setShowSubjectView] = useState(true);
   const [showSubjectFlash, setShowSubjectFlash] = useState(false);
@@ -13,6 +13,10 @@ const Subject = () => {
     question: "",
     answer: "",
   });
+
+  useEffect(() => {
+    console.log("Question data is: ", questionJSON);
+  }, [questionJSON]);
 
   const handleQuestionClick = (e) => {
     setQuestionJSON(e);

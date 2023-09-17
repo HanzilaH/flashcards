@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Subjectview = (props) => {
-  const { onQuestionClick, onStartClick } = props;
+  const { onQuestionClick, onStartClick, onBackClick } = props;
   const { data, removeQuestion, currentSubject, findQuestionArray } =
     useContext(DataContext);
 
@@ -17,7 +17,6 @@ const Subjectview = (props) => {
 
   const [removeElementRef, setRemoveElementRef] = useState({});
   // const [questionArray, setQuestionArray] = useState([]);
-  // Create a function to handle element removal
   const handleRemoveElement = (element) => {
     // const updatedRemoveElementRef = { ...removeElementRef };
     // updatedRemoveElementRef[element.id] = true;
@@ -45,30 +44,34 @@ const Subjectview = (props) => {
 
         console.log(element);
 
-        // Create a new object with the updated property
-        // const updatedRemoveElementRef = { ...removeElementRef };
-        // updatedRemoveElementRef[elementID] = false;
-
         return (
-          <div key={element.id} className={`d-flex m-2 question-list-item `}>
-            <div className="flex-grow-1">
+          <>
+            <div
+              key={element.id}
+              className="d-flex me-2 ms-3 mt-2 mb-3 question-list-item "
+            >
               <div
+                style={{
+                  whiteSpace: "pre-wrap",
+                  wordWrap: "break-word",
+                  overflow: "auto",
+                }}
                 onClick={() => onQuestionClick(element)}
-                className="list-group-item question  bg-transparent border-0"
+                className="p-2 question flex-grow-1"
               >
                 {element.question}
               </div>
-            </div>
 
-            <div className="p-2 bg-transparent d-flex align-items-center justify-content-center">
-              <div
-                onClick={() => handleRemoveElement(element)}
-                className="trash-bin"
-              >
-                <FontAwesomeIcon icon={faTrash} />
+              <div className=" p-2 bg-transparent d-flex align-items-center justify-content-center">
+                <div
+                  onClick={() => handleRemoveElement(element.question)}
+                  className="trash-bin"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </div>
               </div>
             </div>
-          </div>
+          </>
         );
       });
 
@@ -81,14 +84,13 @@ const Subjectview = (props) => {
       <div className="subject-view-section">
         <div
           style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}
-          className="d-flex align-items-center"
+          className="d-flex align-items-center mb-3"
         >
-          <div className="p-2 w-75">
+          <div className="ms-3 me-auto p-2 w-75">
             <h1>{currentSubject}</h1>
           </div>
+
           <div className="p-2 flex-shrink-1 d-flex align-items-center flex-column flex-md-row justify-content-center">
-            {/* <button className="subject-view-button">Add</button>
-            <button className="subject-view-button">Start</button> */}
             <button
               onClick={() => onQuestionClick({ question: "", answer: "" })}
               className="subject-view-button"
@@ -113,19 +115,14 @@ const Subjectview = (props) => {
         </div>
 
         <div className="d-flex justify-content-center">
-          <div className="card w-75 question-list-card">
+          <div className=" w-75 question-list-card">
             <div id="question-label">Questions:</div>
-            <ul id="question-list" className="m-2 list-group ">
-              {questionArray}
-            </ul>
+            <div>{questionArray}</div>
           </div>
         </div>
 
         <div className="w-100 d-flex justify-content-end">
-          <button
-            onClick={() => navigate("/home", { replace: true })}
-            className="subject-view-button"
-          >
+          <button onClick={onBackClick} className="subject-view-button">
             <span>Back</span>
             <svg
               style={{ transform: "rotate(180deg)" }}

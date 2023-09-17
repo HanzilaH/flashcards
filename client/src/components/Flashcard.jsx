@@ -38,7 +38,14 @@ const Flashcard = ({ flipped, flashcardJson }) => {
       >
         <div className="flip-card-inner">
           <div className="flip-card-front">
-            <div className="content-container">
+            <div
+              style={{
+                whiteSpace: "pre-wrap",
+                wordWrap: "break-word",
+                overflow: "auto",
+              }}
+              className="content-container"
+            >
               {localFlashcardJson ? localFlashcardJson.question : null}
             </div>
           </div>
