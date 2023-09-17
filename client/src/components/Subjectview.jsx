@@ -17,7 +17,7 @@ const Subjectview = (props) => {
 
   const [removeElementRef, setRemoveElementRef] = useState({});
   // const [questionArray, setQuestionArray] = useState([]);
-  const handleRemoveElement = (element) => {
+  const handleRemoveElement = (question) => {
     // const updatedRemoveElementRef = { ...removeElementRef };
     // updatedRemoveElementRef[element.id] = true;
 
@@ -27,7 +27,8 @@ const Subjectview = (props) => {
 
     // // Remove the question after the animation duration
     // setTimeout(() => {
-    removeQuestion(currentSubject, element.question);
+
+    removeQuestion(currentSubject, question);
 
     //   // Reset the removing state
     //   updatedRemoveElementRef[element.id] = false;
@@ -57,7 +58,7 @@ const Subjectview = (props) => {
           <>
             <div
               key={element.id}
-              className="d-flex me-2 ms-3 mt-2 mb-3 question-list-item "
+              className="d-flex me-2 ms-3 mt-2 mb-3 question-list-item"
             >
               <div
                 style={{
@@ -86,7 +87,7 @@ const Subjectview = (props) => {
 
       setQuestionArray(transformedData);
     }
-  }, [currentSubject]);
+  }, [data]);
 
   return (
     <>

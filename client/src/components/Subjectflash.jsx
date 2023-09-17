@@ -11,6 +11,8 @@ const Subjectflash = (props) => {
 
   const [questions, setQuestions] = useState([]);
   const [showQuestion, setShowQuestion] = useState(true);
+  const [warningLabel, setWarningLabel] = useState("");
+  // const [questionsForPop, setQuestionsForPop] = use
 
   useEffect(() => {
     // Find the subject object with the matching name
@@ -29,7 +31,10 @@ const Subjectflash = (props) => {
   useEffect(() => {
     if (questions.length === 0) {
       // Handle the case when the questions array is empty
+      setWarningLabel("No questions added");
       return;
+    } else {
+      setWarningLabel("");
     }
 
     const randomIndex = Math.floor(Math.random() * questions.length);
@@ -50,7 +55,6 @@ const Subjectflash = (props) => {
 
     const randomIndex = Math.floor(Math.random() * questions.length);
     const selectedCard = questions[randomIndex];
-
     setFlashCard(selectedCard);
   };
 
@@ -69,6 +73,8 @@ const Subjectflash = (props) => {
             flashcardJson={flashCard}
           ></Flashcard>
         </div>
+
+        <div className="text-center">{warningLabel}</div>
 
         <div className="row w-75 ">
           <div className="d-flex justify-content-center ">

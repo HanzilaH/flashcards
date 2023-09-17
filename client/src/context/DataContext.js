@@ -234,9 +234,14 @@ export const DataContextProvider = ({ children }) => {
           setData((prevData) =>
             prevData.map((entry) => {
               if (entry.subject === subjectName) {
+                console.log("here");
+                console.log(questionToRemove);
                 const updatedQuestions = entry.questions.filter(
                   (question) => question.question !== questionToRemove
+
                 );
+
+                console.log(updatedQuestions);
                 return { ...entry, questions: updatedQuestions };
               }
               return entry;

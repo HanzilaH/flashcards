@@ -63,7 +63,11 @@ const Navbar = ({ onHomeButtonClick }) => {
                 </div>
               </div>
 
-              <div className="my-2 flashcard-nav-link mx-3" aria-current="page">
+              <div
+                onClick={() => alert("Feature not implemented yet")}
+                className="my-2 flashcard-nav-link mx-3"
+                aria-current="page"
+              >
                 Planner
               </div>
               <div className="my-2  mx-3" aria-current="page">
