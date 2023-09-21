@@ -10,12 +10,6 @@ function App() {
 
   
 
-  useEffect(() => {
-    // This code will run when the component mounts (i.e., when the app starts)
-
-    // Display an alert or any other action you want to perform
-    alert('Message from ur Fav person Hanzila:\n\nUse the email: \'flashcards@gmail.com\' and password: \'flashcard\'\n for testing \n \nAnd drop ur suggestions \n\nRegards, ');
-  }, []);
 
 
 

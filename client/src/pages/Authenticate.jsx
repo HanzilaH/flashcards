@@ -17,6 +17,14 @@ const Authenticate = () => {
   const { login, logout, signUp, currentUser } = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // This code will run when the component mounts (i.e., when the app starts)
+
+    // Display an alert to show the public testing email password
+    alert('Message from Hanzila:\n\nUse the email: \'flashcards@gmail.com\' and password: \'flashcard\'\n for testing \n \nAnd drop ur suggestions \n\nRegards, ');
+  }, []);
+
+
   const navigateToHome = () => {
     // for now the current page is not replaced so i can come back for testing
     navigate("/home");
