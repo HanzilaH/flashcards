@@ -25,9 +25,11 @@ const Navbar = ({ onHomeButtonClick }) => {
   };
 
   const handleHomeClick = () => {
-    if (currentUser) {
-      onHomeButtonClick();
-    }
+    // if (currentUser) {
+      // onHomeButtonClick();
+    // }
+    navigate("/home");
+
   };
 
   return (
@@ -63,13 +65,15 @@ const Navbar = ({ onHomeButtonClick }) => {
                 </div>
               </div>
 
-              <div
-                onClick={() => alert("Feature not implemented yet")}
+              <Link
+              to="/planner"
+                // onClick={() => alert("Feature not implemented yet")}
                 className="my-2 flashcard-nav-link mx-3"
                 aria-current="page"
               >
+
                 Planner
-              </div>
+              </Link>
               <div className="my-2  mx-3" aria-current="page">
                 {currentUser ? (
                   <button

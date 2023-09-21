@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import Authenticate from './pages/Authenticate';
+import Planner from './pages/Planner';
 
 
 
@@ -31,6 +32,8 @@ function App() {
 
 
             <Route path="/home" element={<Home />} />
+            <Route path="/planner" element={<Planner />} />
+
           </Routes>
 
       </Router>

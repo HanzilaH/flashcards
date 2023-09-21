@@ -1,0 +1,21 @@
+#planner-list-card {
+    padding: 5% 3%;
+    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 4px 4px 8px rgba(78, 65, 196, 0.2);
+    min-height: 60vh;
+
+  }
+  
+
+#planner-list-date{
+    color: #0d3c72;
+  text-decoration: none;
+  font-size: 1.3rem;
+  border: none;
+  background: none;
+  font-weight: 500;
+
+  font-family: 'Poppins', sans-serif;
+}
