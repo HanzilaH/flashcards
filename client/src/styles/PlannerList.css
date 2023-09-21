@@ -19,3 +19,33 @@
 
   font-family: 'Poppins', sans-serif;
 }
+
+#planner-list-date::before {
+    margin-left: auto;
+  }
+  
+  #planner-list-date::after, #planner-list-date::before {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #8DC7FD;
+    display: block;
+    transition: 0.5s;
+  }
+  
+  #planner-list-date:hover::after, #planner-list-date:hover::before {
+    width: 100%;
+  }
+  
+
+  .entry-checkbox {
+
+    /* padding: 1% 1%; */
+    padding-right: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+  }
+  

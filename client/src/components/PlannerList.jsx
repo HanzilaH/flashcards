@@ -99,7 +99,7 @@ const PlannerListItem = (props) => {
     return (
       <li  className="list-group-item">
         <div className="input-group">
-          <div className="input-group-text entry-checkbox">
+          <div className="entry-checkbox">
             {/* <label className="container"> */}
               <input
                 type="checkbox"
