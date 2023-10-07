@@ -58,15 +58,15 @@ const Authenticate = () => {
   };
   return (
     <>
-      <div>
+      <div className="pt-5 mt-5">
         {/* just two informative messages */}
-        <div className="text-center m-3">
+        {/* <div className="text-center m-3">
           {currentUser ? "data is there" : "data is not there"}
         </div>
 
         <div className="text-center m-4">
           {currentUser ? `Signed In ${currentUser.email}` : "Signed out"}
-        </div>
+        </div> */}
 
         {showSignInPage ? (
           <SignIn
