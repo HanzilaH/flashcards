@@ -24,12 +24,9 @@ const Navbar = ({ onHomeButtonClick }) => {
     navigate("/", { replace: true });
   };
 
-  const handleHomeClick = () => {
-    // if (currentUser) {
-      // onHomeButtonClick();
-    // }
-    navigate("/home");
-
+  const handleButtonClick = (value) => {
+    console.log(value);
+    navigate(`/${value}`, { replace: true });
   };
 
   return (
@@ -60,11 +57,23 @@ const Navbar = ({ onHomeButtonClick }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <div className="navbar-nav ms-auto ">
               <div className="my-2 mx-3" aria-current="page">
-                <div className=" flashcard-nav-link " onClick={handleHomeClick}>
-                  Home
+              <div
+              className="my-2 mx-3 flashcard-nav-link"
+              onClick={() => handleButtonClick('home')}
+            >
+              Home
                 </div>
               </div>
 
+              <div className="my-2 mx-3" aria-current="page">
+              <div
+              className="my-2 mx-3 flashcard-nav-link"
+              onClick={() => handleButtonClick('planner')}
+            >          
+            Planner
+                </div>
+              </div>
+{/* 
               <Link
               to="/planner"
                 // onClick={() => alert("Feature not implemented yet")}
@@ -73,7 +82,7 @@ const Navbar = ({ onHomeButtonClick }) => {
               >
 
                 Planner
-              </Link>
+              </Link> */}
               <div className="my-2  mx-3" aria-current="page">
                 {currentUser ? (
                   <button

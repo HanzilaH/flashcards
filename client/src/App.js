@@ -18,6 +18,10 @@ function App() {
   return (
 
     <div className="App">
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+      </head>
+
 
 
 
@@ -32,6 +36,7 @@ function App() {
 
 
             <Route path="/home" element={<Home />} />
+            
             <Route path="/planner" element={<Planner />} />
 
           </Routes>

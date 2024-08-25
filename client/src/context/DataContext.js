@@ -37,7 +37,33 @@ export const DataContextProvider = ({ children }) => {
           {id:"2",question: "2", answer: "2a"}, 
           {id:"3",question: "3", answer: "3a"}, 
           {id:"4", question: "4", answer: "4a"}]
-        }
+        },
+        {
+          subject: "sub2",
+          questions: [
+            {id:"1", question: "1", answer: "1a"}, 
+        {id:"2",question: "2", answer: "2a"}, 
+        {id:"3",question: "3", answer: "3a"}, 
+        {id:"4", question: "4", answer: "4a"}]
+      },
+      {
+        subject: "sub3",
+        questions: [
+          {id:"1", question: "1", answer: "1a"}, 
+      {id:"2",question: "2", answer: "2a"}, 
+      {id:"3",question: "3", answer: "3a"}, 
+      {id:"4", question: "4", answer: "4a"}]
+    },
+    {
+      subject: "sub4",
+      questions: [
+        {id:"1", question: "1", answer: "1a"}, 
+    {id:"2",question: "2", answer: "2a"}, 
+    {id:"3",question: "3", answer: "3a"}, 
+    {id:"4", question: "4", answer: "4a"}]
+  }
+
+
     ]
     
     );
@@ -49,48 +75,21 @@ export const DataContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (currentUser) {
-        // console.log('here');
-        const userDocRef = doc(db, 'users', currentUser.uid); // 'users' is the name of my collection
-    const userDoc = await getDoc(userDocRef);
-
-
-        // console.log(userDoc);
-        if (userDoc.exists()) {
-          // console.log(userDoc);
-
-          
-          const userData = userDoc.data();
-          // console.log(userData.subjects);
-
-
-
-
-
-          // const transformedData = userData.subjects.map((sub)=>{
-
-          //   return {id:sub.id, subject: sub.name, questions: [{id:"1", question: "1", answer: "1a"}, {id:"2", question: "2", answer: "2a"}] }
-
-          // })
-
-          // console.log(transformedData);
-          setData(userData.subjects)
-
-
-          // this was for a stupid attempt for a subcollection within a collection
-          // const subjectsCollectionRef = collection(userDoc.ref, 'subjects');
-          // const subjectsDocs = await getDocs(subjectsCollectionRef);
-          // const subjectsData = subjectsDocs.docs.map((doc) => ({
-          //   ...doc.data(),
-          //   id: doc.id,
-          // }));
-
-          // // userData.subjects = subjectsData;
-          // console.log(subjectsData);
+      try {
+        if (currentUser) {
+          const userDocRef = doc(db, 'users', currentUser.uid);
+          const userDoc = await getDoc(userDocRef);
+    
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setData(userData.subjects);
+          }
         }
-      }else{
+      } catch (error) {
+        console.error('Error fetching user data:', error);
       }
     };
+    
 
     fetchUserData();
   }, [currentUser]);
